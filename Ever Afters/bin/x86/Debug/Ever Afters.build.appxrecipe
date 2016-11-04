@@ -334,6 +334,9 @@
     <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.Xml.XmlSerializer\4.0.10\lib\netcore50\System.Xml.XmlSerializer.dll">
       <PackagePath>System.Xml.XmlSerializer.dll</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\bin\x86\Debug\Ever Afters.common.dll">
+      <PackagePath>Ever Afters.common.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
     </AppxPackagedFile>

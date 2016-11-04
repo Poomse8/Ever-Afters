@@ -3,6 +3,9 @@ using Ever_Afters.common.Enums;
 
 namespace Ever_Afters.common.Listeners
 {
+    /// <summary>
+    /// The InputChangedListener serves the purpose of passing generated triggers from one service layer to another.
+    /// </summary>
     public interface InputChangedListener
     {
         /// <summary>

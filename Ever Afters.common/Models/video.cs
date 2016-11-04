@@ -9,16 +9,35 @@ namespace Ever_Afters.common.Models
     public class Video
     {
         //General Database Fields
+        /// <summary>
+        /// The database identifier
+        /// </summary>
         public int id { get; set; }
+        /// <summary>
+        /// Boolean value whether or not the base video starts with the figure on screen
+        /// </summary>
         public bool BaseStartsOnScreen { get; set; }
+        /// <summary>
+        /// The path to the base of the movie. Always the first few seconds
+        /// </summary>
         public String BasePath { get; set; }
+        /// <summary>
+        /// The path to the ending where the action ends in the middle of the screen
+        /// </summary>
         public String OnScreenEndingPath { get; set; }
+        /// <summary>
+        /// The path to the ending where the action ends off the screen.
+        /// </summary>
         public String OffScreenEndingPath { get; set; }
 
-        //The TAG id which resolved this video
+        /// <summary>
+        /// The TAG id which resolved this video
+        /// </summary>
         public String Request_TAG { get; set; }
 
-        //ALL Tags that are a match for this video. (a video might be reused for multiple tags?)
+        /// <summary>
+        /// ALL Tags that are a match for this video. (a video might be reused for multiple tags?)
+        /// </summary>
         public IEnumerable<String> TAGS { get; set; }
 
         /// <summary>
@@ -35,7 +54,7 @@ namespace Ever_Afters.common.Models
         /// This resembles the VIDEO object used to map stories to tags
         /// </summary>
         /// <param name="id">The database identifier</param>
-        /// <param name="startonscreen"></param>
+        /// <param name="startonscreen">Boolean value whether or not the base video starts with the figure on screen</param>
         /// <param name="basepath">The path to the base of the movie. Always the first few seconds</param>
         /// <param name="onscreenending">The path to the ending where the action ends in the middle of the screen</param>
         /// <param name="offscreenending">The path to the ending where the action ends off the screen.</param>
@@ -52,7 +71,7 @@ namespace Ever_Afters.common.Models
         /// This resembles the VIDEO object used to map stories to tags - Extended
         /// </summary>
         /// <param name="id">The database identifier</param>
-        /// <param name="startonscreen"></param>
+        /// <param name="startonscreen">Boolean value whether or not the base video starts with the figure on screen</param>
         /// <param name="basepath">The path to the base of the movie. Always the first few seconds</param>
         /// <param name="onscreenending">The path to the ending where the action ends in the middle of the screen</param>
         /// <param name="offscreenending">The path to the ending where the action ends off the screen.</param>
