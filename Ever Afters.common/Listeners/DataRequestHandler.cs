@@ -37,6 +37,12 @@ namespace Ever_Afters.common.Listeners
 
         //READ
         /// <summary>
+        /// This function returns the tag based on its name
+        /// </summary>
+        /// <param name="TagIdentifier">The name read on the tag.</param>
+        /// <returns></returns>
+        Tag LoadTagByName(String TagIdentifier);
+        /// <summary>
         /// This function returns the video that is bound to a given tag.
         /// </summary>
         /// <param name="tag">The tag for which the bound video has to be fetched.</param>
