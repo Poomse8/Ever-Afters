@@ -29,8 +29,8 @@ namespace Ever_Afters.common.Core
 
         #endregion
 
-        private DataRequestHandler Database;
-        private IVisualisationHandler Screen;
+        private readonly DataRequestHandler Database = new DummyDB();
+        private readonly IVisualisationHandler Screen;
 
         public static Engine CurrentEngine { get; private set; }
 

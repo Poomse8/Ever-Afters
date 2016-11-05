@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ever_Afters.common.Core;
+using Ever_Afters.common.Listeners;
 
 namespace Ever_Afters.common.Models
 {
@@ -67,4 +69,87 @@ namespace Ever_Afters.common.Models
     {
         Onscreen, Offscreen
     }
+
+    //DUMMYCLASSES
+    #region DummyClasses
+
+    public class DummyDAL
+    {
+        private InputChangedListener listener = Engine.NewInstance();
+
+        public DummyDAL()
+        {
+                listener.OnTagAdded(Sensors.NFC_LEFT, "MATH-01");
+        }
+    }
+
+    public class DummyDB : DataRequestHandler
+    {
+        public Tag SaveTag(string TagName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Video SaveVideo(bool BaseStartsOnScreen, string BasePath, string OnScreenEndingPath, string OffScreenEndingPath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool BindVideoToTag(Video video, Tag tag)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Tag LoadTagByName(string TagIdentifier)
+        {
+            return new Tag() {id=1,name="MATH-01"};
+        }
+
+        public Video LoadVideoFromTag(Tag tag)
+        {
+            String path = System.IO.Directory.GetCurrentDirectory() + "/Ever Afters.common/Resources/a.mp4";
+            return new Video()
+            {
+                BasePath = path,
+                BaseStartsOnScreen = true,
+                id = 1,
+                OffScreenEndingPath = path,
+                OnScreenEndingPath = path,
+                Request_TAG = "MATH-01",
+                TAGS = new List<string>() { "MATH-01" }
+            };
+        }
+
+        public IEnumerable<Tag> GetUnboundTags()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Tag UpdateTag(Tag UpdatedTag)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Video UpdateVideo(Video UpdatedVideo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteTag(int TagId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteVideo(int VideoId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteBinding(Tag tag)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    #endregion
 }
