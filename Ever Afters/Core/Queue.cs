@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ever_Afters.common.Models;
 
 namespace Ever_Afters.Core
 {
@@ -20,6 +21,10 @@ namespace Ever_Afters.Core
             return CurrentInstance;
         }
 
-        
+        //Methods
+        public static Video NextVideo()
+        {
+            
+        }
     }
 }

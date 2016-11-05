@@ -28,6 +28,20 @@ namespace Ever_Afters
         public MainPage()
         {
             this.InitializeComponent();
+            String parentDir = Directory.GetCurrentDirectory();
+            mediaPlayer.Source = new Uri(parentDir + @"/Ever Afters.common/Resources/a.mp4");
+        }
+
+        private void OnPointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            if (mediaPlayer.CurrentState == MediaElementState.Playing)
+            {
+                mediaPlayer.Stop();
+            }
+            else
+            {
+                mediaPlayer.Play();
+            }
         }
     }
 }

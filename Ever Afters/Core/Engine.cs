@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ever_Afters.common.Enums;
+using Ever_Afters.common.Models;
 
 namespace Ever_Afters.Core
 {
@@ -13,6 +14,14 @@ namespace Ever_Afters.Core
         //Global Variables
         DataRequestHandler Database;
 
+        //Resolve to database
+        private Video ResolveTag(String TagIdentifier)
+        {
+            if (Tag.tagExists(TagIdentifier))
+            {
+                
+            }
+        }
 
         //InputChangedListener Interface
         public bool OnQueueClearRequest(bool force)
