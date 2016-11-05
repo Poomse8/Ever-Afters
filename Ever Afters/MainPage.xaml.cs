@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -36,11 +37,13 @@ namespace Ever_Afters
         {
             if (mediaPlayer.CurrentState == MediaElementState.Playing)
             {
-                mediaPlayer.Stop();
+                mediaPlayer.Pause();
             }
             else
             {
                 mediaPlayer.Play();
+                Debug.WriteLine(mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds);
+                Debug.WriteLine(mediaPlayer.Position.TotalSeconds);
             }
         }
     }

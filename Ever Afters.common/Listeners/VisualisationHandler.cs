@@ -8,6 +8,7 @@ namespace Ever_Afters.common.Listeners
 {
     public interface VisualisationHandler
     {
-
+        Double GetRemainingDuration();
+        void PlayVideo(Uri uri);
     }
 }
