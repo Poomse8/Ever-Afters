@@ -370,6 +370,9 @@
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.xr.xml">
       <PackagePath>Ever Afters.xr.xml</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\Resources\a.mp4">
+      <PackagePath>Ever Afters.common\Resources\a.mp4</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
     </AppxPackagedFile>
