@@ -107,6 +107,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Engine.cs" />
+    <Compile Include="Core\Queue.cs" />
     <Compile Include="Enums\Sensors.cs" />
     <Compile Include="Listeners\DataRequestHandler.cs" />
     <Compile Include="Listeners\InputChangedListener.cs" />

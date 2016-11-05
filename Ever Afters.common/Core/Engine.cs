@@ -1,15 +1,10 @@
-﻿using Ever_Afters.common.Listeners;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Navigation;
 using Ever_Afters.common.Enums;
+using Ever_Afters.common.Listeners;
 using Ever_Afters.common.Models;
 
-namespace Ever_Afters.Core
+namespace Ever_Afters.common.Core
 {
     public class Engine : InputChangedListener
     {
@@ -35,7 +30,7 @@ namespace Ever_Afters.Core
         #endregion
 
         private DataRequestHandler Database;
-        private VisualisationHandler Screen;
+        private IVisualisationHandler Screen;
 
         public static Engine CurrentEngine { get; private set; }
 
@@ -58,7 +53,7 @@ namespace Ever_Afters.Core
             if (!Ignited)
             {
                 //2. Check if the queue isn't empty
-                if (!Queue.IsEmpty())
+                if (!Queue.IsEmpty() || CurrentlyPlaying != null)
                 {
                     Ignited = true;
 
@@ -69,7 +64,7 @@ namespace Ever_Afters.Core
                     //4. Set thread to sleep until video is expected
                     new Task(Update).Wait(waitTime);
 
-                } else CurrentlyPlaying = null;
+                }
             }
         }
 
@@ -117,6 +112,12 @@ namespace Ever_Afters.Core
 
         private void PushNextVideo()
         {
+            if (Queue.IsEmpty())
+            {
+                CurrentlyPlaying = null;
+                return;
+            }
+
             //1. Get the next video from the queue
             Video next = Queue.GiveNextVideo();
 
@@ -160,7 +161,17 @@ namespace Ever_Afters.Core
 
         public bool OnQueueClearRequest(bool force)
         {
-            throw new NotImplementedException();
+            //1. Clear the queue
+            bool success = Queue.ClearQueue();
+
+            //2. Delete the currentlyplayingobject
+            CurrentlyPlaying = null;
+
+            //3. Interrupt the visual
+            Screen.StopVideo();
+            Screen.ClearVideo();
+
+            return success;
         }
 
         public void OnTagAdded(Sensors sensor, string TagIdentifier)

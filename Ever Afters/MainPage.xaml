@@ -14,5 +14,6 @@
                       VerticalAlignment="Stretch"
                     AutoPlay="False"
                     AreTransportControlsEnabled="False"/>
+        <TextBlock HorizontalAlignment="Center" Text="Click to start/pause the video" VerticalAlignment="Bottom" Foreground="White"/>
     </Grid>
 </Page>

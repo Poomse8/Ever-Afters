@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ever_Afters.common.Models;
 
-namespace Ever_Afters.Core
+namespace Ever_Afters.common.Core
 {
     public class Queue
     {
@@ -55,6 +51,11 @@ namespace Ever_Afters.Core
         public static void RemoveFromQueue(QueuePosition position)
         {
             
+        }
+
+        public static Boolean ClearQueue()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
