@@ -144,6 +144,17 @@ namespace Ever_Afters.common.Core
                 //2. Process the normal Queue
                 Video now = GetVideoFromPointer(queuePointer);
                 MovePointerForward(ref queuePointer);
+                
+                //Move the pointer to the next video
+                int count = 10;
+                Video vidAtPos = GetVideoFromPointer(queuePointer);
+                while (vidAtPos == null && count > 0)
+                {
+                    MovePointerForward(ref queuePointer);
+                    vidAtPos = GetVideoFromPointer(queuePointer);
+                    count--;
+                }
+                
                 return now;
             }
         }
@@ -153,7 +164,11 @@ namespace Ever_Afters.common.Core
             bool isEmpty = true;
             foreach (Video vid in VidQueue)
             {
-                if (vid != null) isEmpty = false;
+                if (vid != null)
+                {
+                    isEmpty = false;
+                    break;
+                }
             }
             return isEmpty;
         }

@@ -37,6 +37,20 @@ namespace Ever_Afters.common.Models
                 this.IsOffScreenEnding = true;
             }
         }
+
+        public static PlayingVideo MakeFromVideo(Video vid)
+        {
+            return new PlayingVideo()
+            {
+                id = vid.id,
+                BaseStartsOnScreen = vid.BaseStartsOnScreen,
+                BasePath = vid.BasePath,
+                OnScreenEndingPath = vid.OnScreenEndingPath,
+                OffScreenEndingPath = vid.OffScreenEndingPath,
+                Request_TAG = vid.Request_TAG,
+                TAGS = vid.TAGS
+            };
+        }
     }
 
     public class SensorQueueConverter

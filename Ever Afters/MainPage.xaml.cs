@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Ever_Afters.common.Models;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -31,6 +32,9 @@ namespace Ever_Afters
             this.InitializeComponent();
             String parentDir = Directory.GetCurrentDirectory();
             mediaPlayer.Source = new Uri(parentDir + @"/Ever Afters.common/Resources/a.mp4");
+
+            //Init the dummies
+            DummyDAL dd = new DummyDAL();
         }
 
         private void OnPointerReleased(object sender, PointerRoutedEventArgs e)

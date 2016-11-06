@@ -62,7 +62,8 @@ namespace Ever_Afters.common.Core
                     TimeSpan waitTime = TimeSpan.FromSeconds(duration);
 
                     //4. Set thread to sleep until video is expected
-                    new Task(Update).Wait(waitTime);
+                    //new Task(Update).Wait(waitTime);
+                    Update();
 
                 }
             }
@@ -122,7 +123,7 @@ namespace Ever_Afters.common.Core
             Video next = Queue.GiveNextVideo();
 
             //2. Replace the field and order the screen to play
-            CurrentlyPlaying = (PlayingVideo)next;
+            CurrentlyPlaying = PlayingVideo.MakeFromVideo(next);
             CurrentlyPlaying.SetBase();
             Screen.PlayVideo(new Uri(next.BasePath));
         }
