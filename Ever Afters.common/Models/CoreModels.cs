@@ -122,7 +122,7 @@ namespace Ever_Afters.common.Models
 
         public DummyDAL()
         {
-                _listener.OnTagAdded(Sensors.NFC_LEFT, "MATH-01");
+                //_listener.OnTagAdded(Sensors.NFC_LEFT, "MATH-01");
         }
     }
 
