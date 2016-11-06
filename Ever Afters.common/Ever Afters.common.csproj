@@ -114,6 +114,7 @@
     <Compile Include="Listeners\InputChangedListener.cs" />
     <Compile Include="Listeners\VisualisationHandler.cs" />
     <Compile Include="Models\CoreModels.cs" />
+    <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

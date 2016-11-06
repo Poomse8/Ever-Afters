@@ -1,6 +1,7 @@
 ﻿using Ever_Afters.common.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,13 +74,41 @@ namespace Ever_Afters.common.Models
     //DUMMYCLASSES
     #region DummyClasses
 
+    public class DummyVisualisation : IVisualisationHandler
+    {
+        public double GetRemainingDuration()
+        {
+            return 1.0;
+        }
+
+        public void PlayVideo(Uri uri)
+        {
+            Debug.WriteLine("Playing " + uri.AbsolutePath);
+        }
+
+        public void StopVideo()
+        {
+            Debug.WriteLine("Stopping Video");
+        }
+
+        public void ClearVideo()
+        {
+            Debug.WriteLine("Clearing Video");
+        }
+
+        public void DisplayError(string errormessage)
+        {
+            Debug.WriteLine("Error: " + errormessage);
+        }
+    }
+
     public class DummyDAL
     {
-        private InputChangedListener listener = Engine.NewInstance();
+        private readonly InputChangedListener _listener = Engine.NewInstance();
 
         public DummyDAL()
         {
-                listener.OnTagAdded(Sensors.NFC_LEFT, "MATH-01");
+                _listener.OnTagAdded(Sensors.NFC_LEFT, "MATH-01");
         }
     }
 

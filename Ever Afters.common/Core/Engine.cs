@@ -30,7 +30,7 @@ namespace Ever_Afters.common.Core
         #endregion
 
         private readonly DataRequestHandler Database = new DummyDB();
-        private readonly IVisualisationHandler Screen;
+        private readonly IVisualisationHandler Screen = new DummyVisualisation();
 
         public static Engine CurrentEngine { get; private set; }
 
@@ -152,7 +152,11 @@ namespace Ever_Afters.common.Core
                 Tag loadedTag = Database.LoadTagByName(TagIdentifier);
                 return Database.LoadVideoFromTag(loadedTag);
 
-            } else throw new NotImplementedException();
+            } else
+            {
+                Screen.DisplayError("The tag you scanned was not found in the database. We're sorry.");
+                return null;
+            }
         }
 
         #endregion
@@ -178,6 +182,7 @@ namespace Ever_Afters.common.Core
         {
             //1. Resolve tag from database
             Video vid = ResolveTag(TagIdentifier);
+            if (vid == null) return;
 
             //2. Add the new video to the queue
             Queue.AddToQueue(vid, SensorQueueConverter.Convert(sensor));

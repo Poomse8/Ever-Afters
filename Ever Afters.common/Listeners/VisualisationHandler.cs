@@ -12,5 +12,6 @@ namespace Ever_Afters.common.Listeners
         void PlayVideo(Uri uri);
         void StopVideo();
         void ClearVideo();
+        void DisplayError(String errormessage);
     }
 }
