@@ -114,13 +114,14 @@
     <Compile Include="Listeners\InputChangedListener.cs" />
     <Compile Include="Listeners\VisualisationHandler.cs" />
     <Compile Include="Models\CoreModels.cs" />
+    <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Ever_Afters.common.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\a.mp4" />
+    <Content Include="Resources\skel.mp4" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
