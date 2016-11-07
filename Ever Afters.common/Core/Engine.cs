@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Ever_Afters.common.Enums;
 using Ever_Afters.common.Listeners;
@@ -8,9 +9,14 @@ namespace Ever_Afters.common.Core
 {
     public class Engine : InputChangedListener
     {
+        private const int RenderEngineLeadTime = 20; //In Ms
+
         #region SingleTon
 
         #region Fields & Properties
+
+        public IVisualisationHandler Screen { get; set; }
+        public DataRequestHandler Database { get; set; }
 
         public bool Ignited { get; private set; }
 
@@ -29,26 +35,29 @@ namespace Ever_Afters.common.Core
 
         #endregion
 
-        private readonly DataRequestHandler Database = new DummyDB();
-        private readonly IVisualisationHandler Screen = new DummyVisualisation();
-
         public static Engine CurrentEngine { get; private set; }
 
-        public static Engine NewInstance()
+        public static Engine NewInstance(DataRequestHandler db = null, IVisualisationHandler scn = null)
         {
-            if (CurrentEngine == null)
-            {
-                CurrentEngine = new Engine();
-            }
-            return CurrentEngine;
+            if(db == null) db = new Skel_Db();
+            if(scn == null) scn = new Skel_Screen();
+
+            return CurrentEngine ?? (CurrentEngine = new Engine(db, scn));
+        }
+
+        public Engine(DataRequestHandler db, IVisualisationHandler screen)
+        {
+            Database = db;
+            Screen = screen;
         }
 
         #endregion
 
         #region Core
 
-        private void Ignite()
+        private async void Ignite()
         {
+            Debug.WriteLine("Ignited");
             //1. Check if the engine isn't already working
             if (!Ignited)
             {
@@ -59,12 +68,13 @@ namespace Ever_Afters.common.Core
 
                     //3. Check with Screen -> How long until the next video is expected?
                     Double duration = Screen.GetRemainingDuration();
+                    if (duration - RenderEngineLeadTime > 0) duration -= RenderEngineLeadTime;
                     TimeSpan waitTime = TimeSpan.FromSeconds(duration);
 
                     //4. Set thread to sleep until video is expected
                     //new Task(Update).Wait(waitTime);
+                    await Task.Delay(waitTime);
                     Update();
-
                 }
             }
         }
@@ -108,7 +118,7 @@ namespace Ever_Afters.common.Core
             }
 
             //Restart the loop
-            Ignited = false; Ignite();
+            Ignited = false;
         }
 
         private void PushNextVideo()
@@ -158,6 +168,11 @@ namespace Ever_Afters.common.Core
                 Screen.DisplayError("The tag you scanned was not found in the database. We're sorry.");
                 return null;
             }
+        }
+
+        public void VideoStarted()
+        {
+            Ignite();
         }
 
         #endregion

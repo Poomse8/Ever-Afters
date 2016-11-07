@@ -14,11 +14,7 @@ namespace Ever_Afters.common.Core
         //SINGLETON PATTERN
         public static Queue NewInstance()
         {
-            if (CurrentInstance == null)
-            {
-                CurrentInstance = new Queue();
-            }
-            return CurrentInstance;
+            return CurrentInstance ?? (CurrentInstance = new Queue());
         }
 
         #endregion
@@ -35,36 +31,36 @@ namespace Ever_Afters.common.Core
             pointer = position;
         }
 
-        private static void MovePointerForward(ref QueuePosition pointer)
+        private static void MovePointerForward(ref QueuePosition ptr)
         {
-            switch (pointer)
+            switch (ptr)
             {
                 case QueuePosition.Q1:
-                    pointer = QueuePosition.Q2;
+                    ptr = QueuePosition.Q2;
                     break;
                 case QueuePosition.Q2:
-                    pointer = QueuePosition.Q3;
+                    ptr = QueuePosition.Q3;
                     break;
                 case QueuePosition.Q3:
-                    pointer = QueuePosition.Q4;
+                    ptr = QueuePosition.Q4;
                     break;
                 case QueuePosition.Q4:
-                    pointer = QueuePosition.Q5;
+                    ptr = QueuePosition.Q5;
                     break;
                 case QueuePosition.Q5:
-                    pointer = QueuePosition.Q1;
+                    ptr = QueuePosition.Q1;
                     break;
             }
         }
 
-        private static Video GetVideoFromPointer(QueuePosition pointer, bool includePriority = false)
+        private static Video GetVideoFromPointer(QueuePosition ptr, bool includePriority = false)
         {
             if (includePriority)
             {
                 if(PriorityQueue.Count > 0) return PriorityQueue.First();
             }
 
-            switch (pointer)
+            switch (ptr)
             {
                 case QueuePosition.Q1:
                     return VidQueue[0];
@@ -125,6 +121,18 @@ namespace Ever_Afters.common.Core
             }
         }
 
+        private static void MovePointerToNextVideo(ref QueuePosition ptr)
+        {
+            int count = 11;
+            Video vidAtPos = GetVideoFromPointer(ptr);
+            while (vidAtPos == null && count > 0)
+            {
+                MovePointerForward(ref ptr);
+                vidAtPos = GetVideoFromPointer(ptr);
+                count--;
+            }
+        }
+
         #endregion
 
         #region Output
@@ -146,14 +154,7 @@ namespace Ever_Afters.common.Core
                 MovePointerForward(ref queuePointer);
                 
                 //Move the pointer to the next video
-                int count = 10;
-                Video vidAtPos = GetVideoFromPointer(queuePointer);
-                while (vidAtPos == null && count > 0)
-                {
-                    MovePointerForward(ref queuePointer);
-                    vidAtPos = GetVideoFromPointer(queuePointer);
-                    count--;
-                }
+                MovePointerToNextVideo(ref queuePointer);
                 
                 return now;
             }
@@ -179,6 +180,9 @@ namespace Ever_Afters.common.Core
 
         public static void AddToQueue(Video video, QueuePosition position = QueuePosition.Nextfree)
         {
+            //Check if the queue is empty -> If this is the first video, the pointer must be set appropriately
+            bool wasEmpty = IsEmpty();
+
             switch (position)
             {
                 case QueuePosition.Nextfree:
@@ -205,6 +209,12 @@ namespace Ever_Afters.common.Core
                     MovePointer(position);
                     InsertOnPointer(video);
                     break;
+            }
+
+            if (wasEmpty)
+            {
+                //Move the pointer to the next video
+                MovePointerToNextVideo(ref queuePointer);
             }
         }
 

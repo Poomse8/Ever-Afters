@@ -85,10 +85,77 @@ namespace Ever_Afters.common.Models
         Onscreen, Offscreen
     }
 
-    //DUMMYCLASSES
-    #region DummyClasses
+    #region Skeletons
 
-    public class DummyVisualisation : IVisualisationHandler
+    public class Skel_Db : DataRequestHandler
+    {
+        public Tag SaveTag(string TagName)
+        {
+            return null;
+        }
+
+        public Video SaveVideo(bool BaseStartsOnScreen, string BasePath, string OnScreenEndingPath, string OffScreenEndingPath)
+        {
+            return null;
+        }
+
+        public bool BindVideoToTag(Video video, Tag tag)
+        {
+            return false;
+        }
+
+        public Tag LoadTagByName(string TagIdentifier)
+        {
+            return new Tag() { id = 0, name = "SKEL" };
+        }
+
+        public Video LoadVideoFromTag(Tag tag)
+        {
+            String path = System.IO.Directory.GetCurrentDirectory() + "/Ever Afters.common/Resources/skel.mp4";
+            return new Video()
+            {
+                BasePath = path,
+                BaseStartsOnScreen = true,
+                id = 1,
+                OffScreenEndingPath = path,
+                OnScreenEndingPath = path,
+                Request_TAG = tag.name,
+                TAGS = new List<string>() { "SKEL" }
+            };
+        }
+
+        public IEnumerable<Tag> GetUnboundTags()
+        {
+            return new List<Tag>();
+        }
+
+        public Tag UpdateTag(Tag UpdatedTag)
+        {
+            return UpdatedTag;
+        }
+
+        public Video UpdateVideo(Video UpdatedVideo)
+        {
+            return UpdatedVideo;
+        }
+
+        public bool DeleteTag(int TagId)
+        {
+            return false;
+        }
+
+        public bool DeleteVideo(int VideoId)
+        {
+            return false;
+        }
+
+        public bool DeleteBinding(Tag tag)
+        {
+            return false;
+        }
+    }
+
+    public class Skel_Screen : IVisualisationHandler
     {
         public double GetRemainingDuration()
         {
@@ -97,100 +164,22 @@ namespace Ever_Afters.common.Models
 
         public void PlayVideo(Uri uri)
         {
-            Debug.WriteLine("Playing " + uri.AbsolutePath);
+
         }
 
         public void StopVideo()
         {
-            Debug.WriteLine("Stopping Video");
+
         }
 
         public void ClearVideo()
         {
-            Debug.WriteLine("Clearing Video");
+
         }
 
         public void DisplayError(string errormessage)
         {
-            Debug.WriteLine("Error: " + errormessage);
-        }
-    }
 
-    public class DummyDAL
-    {
-        private readonly InputChangedListener _listener = Engine.NewInstance();
-
-        public DummyDAL()
-        {
-                //_listener.OnTagAdded(Sensors.NFC_LEFT, "MATH-01");
-        }
-    }
-
-    public class DummyDB : DataRequestHandler
-    {
-        public Tag SaveTag(string TagName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Video SaveVideo(bool BaseStartsOnScreen, string BasePath, string OnScreenEndingPath, string OffScreenEndingPath)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool BindVideoToTag(Video video, Tag tag)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Tag LoadTagByName(string TagIdentifier)
-        {
-            return new Tag() {id=1,name="MATH-01"};
-        }
-
-        public Video LoadVideoFromTag(Tag tag)
-        {
-            String path = System.IO.Directory.GetCurrentDirectory() + "/Ever Afters.common/Resources/a.mp4";
-            return new Video()
-            {
-                BasePath = path,
-                BaseStartsOnScreen = true,
-                id = 1,
-                OffScreenEndingPath = path,
-                OnScreenEndingPath = path,
-                Request_TAG = "MATH-01",
-                TAGS = new List<string>() { "MATH-01" }
-            };
-        }
-
-        public IEnumerable<Tag> GetUnboundTags()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Tag UpdateTag(Tag UpdatedTag)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Video UpdateVideo(Video UpdatedVideo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteTag(int TagId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteVideo(int VideoId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteBinding(Tag tag)
-        {
-            throw new NotImplementedException();
         }
     }
 
