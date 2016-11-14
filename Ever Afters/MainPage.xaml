@@ -5,16 +5,35 @@
     xmlns:local="using:Ever_Afters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" KeyDown="Page_KeyDown">
 
     <Grid Background="Black" PointerReleased="OnPointerReleased">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" x:Name="txtError" FontSize="30" VerticalAlignment="Top" Foreground="Red"/>
-        <MediaElement x:Name="mediaPlayer"
+        <MediaElement Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" x:Name="mediaPlayer"
                     Source=""
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     AutoPlay="False"
                     AreTransportControlsEnabled="False" CurrentStateChanged="state"/>
-        <TextBlock HorizontalAlignment="Center" Text="Click to start/pause the video (DUMMY - replacement of DAL)" VerticalAlignment="Bottom" Foreground="White"/>
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" HorizontalAlignment="Center" Text="Click to start/pause the video (DUMMY - replacement of DAL)" VerticalAlignment="Bottom" Foreground="White"/>
+
+        <!--Buttons en tools voor nfc-->
+        <TextBlock x:Name="txtNfcListener" Visibility="Collapsed" />
+        <Button x:Name="btnReader1" Content="Kubus 1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" FontSize="40" Background="#330074FF" BorderThickness="5" Click="btnReader_Click" />
+        <Button x:Name="btnReader2" Content="Kubus 2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1" FontSize="40" Background="#330074FF" BorderThickness="5" Click="btnReader_Click" />
+        <Button x:Name="btnReader3" Content="Kubus 3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="2" FontSize="40" Background="#330074FF" BorderThickness="5" Click="btnReader_Click" />
+        <Button x:Name="btnReader4" Content="Kubus 4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="3" FontSize="40" Background="#330074FF" BorderThickness="5" Click="btnReader_Click" />
+        <Button x:Name="btnReader5" Content="Kubus 5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="4" FontSize="40" Background="#330074FF" BorderThickness="5" Click="btnReader_Click" />
     </Grid>
 </Page>
