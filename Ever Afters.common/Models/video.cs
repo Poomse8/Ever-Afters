@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ever_Afters.common.DatabaseLayer;
+using SQLite.Net.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,18 +18,22 @@ namespace Ever_Afters.common.Models
         /// <summary>
         /// Boolean value whether or not the base video starts with the figure on screen
         /// </summary>
+        [Column("basestart")]
         public bool BaseStartsOnScreen { get; set; }
         /// <summary>
         /// The path to the base of the movie. Always the first few seconds
         /// </summary>
+        [Column("basepath")]
         public String BasePath { get; set; }
         /// <summary>
         /// The path to the ending where the action ends in the middle of the screen
         /// </summary>
+        [Column("onscreen_ending")]
         public String OnScreenEndingPath { get; set; }
         /// <summary>
         /// The path to the ending where the action ends off the screen.
         /// </summary>
+        [Column("offscreen_ending")]
         public String OffScreenEndingPath { get; set; }
 
         /// <summary>
@@ -90,13 +96,15 @@ namespace Ever_Afters.common.Models
         public static bool pathExists(String path)
         {
             //Check if a given path resolves to a video.
-            return true;
+           return SQLiteService.CheckPathExist(path);
+           
         }
 
         public static bool isBound(String path)
         {
             //Check if a video with given path is bound to any tag.
-            return true;
+        
+            return SQLiteService.IsBoundPathToTag(path);
         }
 
         //Override

@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Core\Queue.cs" />
+    <Compile Include="DatabaseLayer\SQLiteService.cs" />
     <Compile Include="Enums\Sensors.cs" />
     <Compile Include="Listeners\DataRequestHandler.cs" />
     <Compile Include="Listeners\InputChangedListener.cs" />
@@ -122,6 +123,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\skel.mp4" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="SQLite.UAP.2015, Version=3.9.2">
+      <Name>SQLite for Universal App Platform</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
