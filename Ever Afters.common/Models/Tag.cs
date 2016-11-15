@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ever_Afters.common.DatabaseLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,18 +42,24 @@ namespace Ever_Afters.common.Models
             this.id = id;
             this.name = TagName;
         }
-
+        
         //Static Functions
         public static bool tagExists(String TagName)
         {
             //Check if a tag exists with given name.
-            return true;
+            return SQLiteService.CheckTagExist(TagName);
         }
 
         public static bool isBound(String TagName)
         {
             //Check if a tag with given name is bound to a video.
-            return true;
+            SQLiteService sql = new SQLiteService();
+            List<Tag> tags = sql.GetUnboundTags().ToList<Tag>();
+            Tag tag = sql.LoadTagByName(TagName);
+            if (!tags.Contains(tag))
+                return true;
+            else
+                return false;
         }
 
         //Overrides

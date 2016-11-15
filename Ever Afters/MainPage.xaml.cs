@@ -21,6 +21,7 @@ using Ever_Afters.common.Core;
 using Ever_Afters.common.Enums;
 using Ever_Afters.common.Listeners;
 using Ever_Afters.common.Models;
+using Ever_Afters.common.DatabaseLayer;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -38,8 +39,9 @@ namespace Ever_Afters
         {
             this.InitializeComponent();
             InitialiseEngine();
+          
         }
-
+   
         public void InitialiseEngine()
         {
             //Register the screen in the engine.

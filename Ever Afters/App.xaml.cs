@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ever_Afters.common.DatabaseLayer;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace Ever_Afters
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            SQLiteService.InitSQLite();
         }
 
         /// <summary>
