@@ -28,13 +28,13 @@
     <AppXManifest Include="D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-11-12T21:50:40.576</Modified>
+      <Modified>2016-11-16T21:51:38.636</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.exe">
       <PackagePath>entrypoint\Ever Afters.exe</PackagePath>
-      <Modified>2016-11-12T21:50:39.612</Modified>
+      <Modified>2016-11-16T21:51:37.714</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Nicol\.nuget\packages\Microsoft.CSharp\4.0.0\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -454,7 +454,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.DAL\bin\x86\Debug\Ever Afters.DAL.dll">
       <PackagePath>Ever Afters.DAL.dll</PackagePath>
-      <Modified>2016-11-12T18:58:39.893</Modified>
+      <Modified>2016-11-16T21:42:18.311</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
@@ -496,7 +496,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.xr.xml">
       <PackagePath>Ever Afters.xr.xml</PackagePath>
-      <Modified>2016-11-12T21:26:42.070</Modified>
+      <Modified>2016-11-16T21:15:09.556</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\Resources\skel.mp4">
       <PackagePath>Ever Afters.common\Resources\skel.mp4</PackagePath>
@@ -509,11 +509,11 @@
     <AppxPackagedFile Include="D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-11-12T21:26:44.415</Modified>
+      <Modified>2016-11-16T21:51:38.484</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\bin\x86\Debug\Core\Ever Afters.exe">
       <PackagePath>Ever Afters.exe</PackagePath>
-      <Modified>2016-11-12T21:50:40.570</Modified>
+      <Modified>2016-11-16T21:51:38.633</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
