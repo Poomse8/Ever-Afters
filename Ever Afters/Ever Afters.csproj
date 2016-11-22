@@ -131,10 +131,6 @@
       <Project>{4fed68e1-b80d-415b-b02a-d582effd602a}</Project>
       <Name>Ever Afters.common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Ever Afters.DAL\Ever Afters.DAL.csproj">
-      <Project>{ae45786d-68a6-4e93-9fb3-46ad791cebc2}</Project>
-      <Name>Ever Afters.DAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

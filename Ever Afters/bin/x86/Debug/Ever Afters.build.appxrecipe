@@ -337,9 +337,6 @@
     <AppxPackagedFile Include="D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\bin\x86\Debug\Ever Afters.common.dll">
       <PackagePath>Ever Afters.common.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.DAL\bin\x86\Debug\Ever Afters.DAL.dll">
-      <PackagePath>Ever Afters.DAL.dll</PackagePath>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
     </AppxPackagedFile>

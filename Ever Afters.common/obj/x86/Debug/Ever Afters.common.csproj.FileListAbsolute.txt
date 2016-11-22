@@ -15,3 +15,20 @@ C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\qualifiers.txt
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\qualifiers.txt.intermediate
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\bin\x86\Debug\Ever Afters.common.dll
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\bin\x86\Debug\Ever Afters.common.pdb
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\bin\x86\Debug\Ever Afters.common.pri
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\Ever Afters.common.csprojResolveAssemblyReference.cache
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\Ever Afters.common.dll
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\Ever Afters.common.pdb
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\priconfig.xml
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\priconfig.xml.intermediate
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\layout.resfiles
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\layout.resfiles.intermediate
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\resources.resfiles
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\resources.resfiles.intermediate
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\pri.resfiles
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\pri.resfiles.intermediate
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\qualifiers.txt
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\qualifiers.txt.intermediate
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt

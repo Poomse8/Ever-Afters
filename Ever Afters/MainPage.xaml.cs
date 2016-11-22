@@ -23,11 +23,11 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Ever_Afters.common;
 using Ever_Afters.common.Core;
 using Ever_Afters.common.Enums;
 using Ever_Afters.common.Listeners;
 using Ever_Afters.common.Models;
-using Ever_Afters.DAL;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 

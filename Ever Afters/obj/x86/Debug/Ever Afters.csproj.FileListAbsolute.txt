@@ -390,6 +390,3 @@ D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Aft
 D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\obj\x86\Debug\qualifiers.txt.intermediate
 D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt
 D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\obj\x86\Debug\ProjectArchitectures.txt
-D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.DAL.dll
-D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.DAL.pdb
-D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.DAL.pri
