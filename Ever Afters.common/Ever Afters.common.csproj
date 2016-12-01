@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Core\Queue.cs" />
+    <Compile Include="DAL\NfcEngine.cs" />
     <Compile Include="DatabaseLayer\SQLiteService.cs" />
     <Compile Include="Enums\Sensors.cs" />
     <Compile Include="Listeners\DataRequestHandler.cs" />

@@ -1,2 +1,2 @@
-C:\Users\Hanh\Documents\School\Startup\Ever-afters\Ever Afters.common\Ever Afters.common.csproj;x86
-C:\Users\Hanh\Documents\School\Startup\Ever-afters\Ever Afters\Ever Afters.csproj;x86
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters.common\Ever Afters.common.csproj;x86
+D:\Nicolas\Documents\HOWEST - 3NMCT\Semester 5\S5 - Startup\Ever-Afters\Ever Afters\Ever Afters.csproj;x86
