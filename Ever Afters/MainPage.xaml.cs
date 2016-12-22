@@ -131,6 +131,7 @@ namespace Ever_Afters
         }
 
         #endregion
+
         #region NFcInput & Buttons (Nico)
 
         private void btnReader_Click(object sender, RoutedEventArgs e)
