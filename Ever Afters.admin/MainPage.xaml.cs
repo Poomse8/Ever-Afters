@@ -80,7 +80,7 @@ namespace Ever_Afters.admin
         #endregion
 
         #region upTagGrid
-        private void SubmitUpTag(object sender, PointerRoutedEventArgs e)
+        private void SubmitUpTag(object sender, RoutedEventArgs e)
         {
             String returntext = "Unknown Error";
             String tagId = (String)upTagName.Text;
@@ -108,15 +108,33 @@ namespace Ever_Afters.admin
         StorageFile offscreenVideoPath = null;
         StorageFile onscreenVideoPath = null;
 
-        private void UpVideoSubmit(object sender, PointerRoutedEventArgs e)
+        private async void UpVideoSubmit(object sender, RoutedEventArgs e)
         {
+            String returntext = "Unknown Error";
+
             if(baseVideoPath != null && offscreenVideoPath != null && onscreenVideoPath != null)
             {
+                try
+                {
+                    String path = System.IO.Directory.GetCurrentDirectory() + "\\Ever Afters.common\\Resources";
+                    StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
 
+                    await baseVideoPath.CopyAsync(folder);
+                    await offscreenVideoPath.CopyAsync(folder);
+                    await onscreenVideoPath.CopyAsync(folder);
+
+                    returntext = "Uploading Succeeded!";
+                }
+                catch (Exception ex)
+                {
+                    returntext = "file already exists.";
+                }
             }
+
+            upVideoTitle.Text = returntext;
         }
 
-        private async void OpenDialogBaseVideo(object sender, PointerRoutedEventArgs e)
+        private async void OpenDialogBaseVideo(object sender, RoutedEventArgs e)
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
@@ -136,7 +154,7 @@ namespace Ever_Afters.admin
             }
         }
 
-        private async void OpenDialogOnscreenEnding(object sender, PointerRoutedEventArgs e)
+        private async void OpenDialogOnscreenEnding(object sender, RoutedEventArgs e)
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
@@ -156,7 +174,7 @@ namespace Ever_Afters.admin
             }
         }
 
-        private async void OpenDialogOffscreenEnding(object sender, PointerRoutedEventArgs e)
+        private async void OpenDialogOffscreenEnding(object sender, RoutedEventArgs e)
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;

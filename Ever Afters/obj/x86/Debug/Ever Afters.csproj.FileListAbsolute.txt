@@ -786,5 +786,5 @@ C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\pri.resfil
 C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\qualifiers.txt
 C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\qualifiers.txt.intermediate
 C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt
-C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\Ever Afters.common.pri.xml
 C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\ProjectArchitectures.txt
+C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.build.appxrecipe
