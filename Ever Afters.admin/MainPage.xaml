@@ -68,7 +68,7 @@
                 <ComboBox HorizontalAlignment="Center" x:Name="cboTags" />
                 <TextBlock Text="VideoPath:" Foreground="White" HorizontalAlignment="Center" />
                 <ComboBox HorizontalAlignment="Center" x:Name="cboVideo" />
-                <Button x:Name="bindTagSubmit" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light"/>
+                <Button x:Name="bindTagSubmit" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="BindTagSubmit_OnClick"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" x:Name="removeGrid" Visibility="Collapsed">
@@ -77,12 +77,12 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="Tag:" Foreground="White" HorizontalAlignment="Center"/>
                     <ComboBox HorizontalAlignment="Center" Margin="50,0,0,0" x:Name="cboAllTags" />
-                    <Button x:Name="removeTagSubmit" Margin="50,0,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light"/>
+                    <Button x:Name="removeTagSubmit" Margin="50,0,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="RemoveTagSubmit_OnClick"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="VideoPath:" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     <ComboBox HorizontalAlignment="Center" Margin="50,0,0,0" x:Name="cboAllVideo" />
-                    <Button x:Name="removeVideoSubmit" Margin="50,0,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light"/>
+                    <Button x:Name="removeVideoSubmit" Margin="50,0,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="RemoveVideoSubmit_OnClick"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

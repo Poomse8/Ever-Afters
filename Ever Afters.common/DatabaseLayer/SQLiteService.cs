@@ -16,10 +16,12 @@ namespace Ever_Afters.common.DatabaseLayer
         private static string path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "EverAfters.sqlite");
         private static string MovieTabelNaam = "movie";
         private static string TagTabelNaam = "tag";
+
         public SQLiteService()
         {
             Engine.NewInstance().Database = this;
         }
+
         #region create tables
         public static void InitSQLite()
         {
@@ -52,6 +54,7 @@ namespace Ever_Afters.common.DatabaseLayer
             cc.ExecuteNonQuery();
         }
         #endregion
+
         /*
          * These are needed when you want to develop the mobile app
          * For now these are not necessary
@@ -78,6 +81,7 @@ namespace Ever_Afters.common.DatabaseLayer
             SQLiteCommand cc = conn.CreateCommand(createtrk);
             cc.ExecuteNonQuery();
         }*/
+
         #region Static functions
         private static int ExecuteInsert(string sql, params object[] args)
         {
@@ -149,18 +153,19 @@ namespace Ever_Afters.common.DatabaseLayer
                 SQLiteCommand comm = conn.CreateCommand(sql, pathname);
                 vid = comm.ExecuteScalar<int>();
             }
-            if (vid!=null )
+            if (vid != null)
                 return true;
             else
                 return false;
         }
         #endregion
+
         #region interface implementations
         public bool BindVideoToTag(Video video, Tag tag)
         {
             string command = "UPDATE "+TagTabelNaam+" SET videoid = ? WHERE id="+tag.id;
             object[] args = new object[] { video.id};
-            return ExecuteUpdate(command, args)>0;
+            return ExecuteUpdate(command, args) > 0;
         }
 
         public bool DeleteBinding(Tag tag)
@@ -173,7 +178,7 @@ namespace Ever_Afters.common.DatabaseLayer
         public bool DeleteTag(int TagId)
         {
             string command = "DELETE FROM "+TagTabelNaam+" WHERE id=" + TagId;
-            return ExecuteUpdate(command)==1;
+            return ExecuteUpdate(command) == 1;
         }
 
         public bool DeleteVideo(int VideoId)
@@ -188,6 +193,25 @@ namespace Ever_Afters.common.DatabaseLayer
             object[] args = new object[] { null };
             IEnumerable<Tag> tags = SelectTags(command,args);
             return tags;
+        }
+
+        public IEnumerable<Tag> GetAllTags()
+        {
+            string command = "SELECT id, name, videoid FROM " + TagTabelNaam;
+            object[] args = new object[] { null };
+            IEnumerable<Tag> tags = SelectTags(command, args);
+            return tags;
+        }
+
+        public IEnumerable<Video> GetAllVideos()
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path))
+            {
+                string command = "SELECT id, basepath,onscreen_ending,offscreen_ending FROM " + MovieTabelNaam;
+                object[] args = new object[] { null };
+                IEnumerable<Video> videos = conn.Query<Video>(command, args);
+                return videos;
+            }
         }
 
         public Tag LoadTagByName(string TagIdentifier)

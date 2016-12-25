@@ -52,11 +52,15 @@ namespace Ever_Afters.admin
 
         private void ToBindGrid(object sender, PointerRoutedEventArgs e)
         {
+            PopulateBindTags();
+            PopulateBindVideo();
             ShowGrids(2);
         }
 
         private void ToRemoveGrid(object sender, PointerRoutedEventArgs e)
         {
+            PopulateRemoveTags();
+            PopulateRemoveVideos();
             ShowGrids(3);
         }
 
@@ -105,7 +109,7 @@ namespace Ever_Afters.admin
                     returntext = "Tag Saved Successfully";
                 } else
                 {
-                    returntext = "The tag already exist!";
+                    returntext = "The tag already exists!";
                 }
             } else returntext = "The tagstring cannot be empty!";
 
@@ -116,7 +120,7 @@ namespace Ever_Afters.admin
             ThreadPoolTimer.CreatePeriodicTimer((t) =>
             {
                 ChangeText(upTagTitle, "Scan Tag");
-                upTagSubmit.IsEnabled = true;
+                ReEnable(upTagSubmit);
             }, TimeSpan.FromSeconds(3));
         }
         #endregion
@@ -145,36 +149,62 @@ namespace Ever_Afters.admin
                 {
                     try
                     {
-                        //Copy the videos to the resource directory
-                        String path = Directory.GetCurrentDirectory() + "\\Ever Afters.common\\Resources";
-                        StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
+                        //Make sure that the resources directory exists
+                        String path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Resources");
+                        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
-                        await baseVideoPath.CopyAsync(folder);
-                        await offscreenVideoPath.CopyAsync(folder);
-                        await onscreenVideoPath.CopyAsync(folder);
+                        //Check if one of the videos doesn't exist yet
+                        bool baseExists = File.Exists(Path.Combine(path, baseVideoPath.Name));
+                        bool onExists = File.Exists(Path.Combine(path, onscreenVideoPath.Name));
+                        bool offExists = File.Exists(Path.Combine(path, offscreenVideoPath.Name));
 
-                        //Get the information about the beginning of the video
-                        bool startsOnScreen = rbtOnScreen.IsChecked.Value;
+                        if (baseExists == false && onExists == false && offExists == false)
+                        {
+                            //Check if the videos are unique!
+                            if (baseVideoPath.Name == onscreenVideoPath.Name || baseVideoPath.Name == offscreenVideoPath.Name || onscreenVideoPath.Name == offscreenVideoPath.Name)
+                            {
+                                returntext = "Videos cannot be the same!";
+                            }
+                            else
+                            {
+                                //Copy the videos to the resource directory
+                                StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
+                                await baseVideoPath.CopyAsync(folder);
+                                await offscreenVideoPath.CopyAsync(folder);
+                                await onscreenVideoPath.CopyAsync(folder);
 
-                        //Save the video to the database
-                        Db.SaveVideo(startsOnScreen, baseVideoPath.Name, onscreenVideoPath.Name, offscreenVideoPath.Name);
+                                //Get the information about the beginning of the video
+                                bool startsOnScreen = rbtOnScreen.IsChecked.Value;
 
-                        //Clear the input fields
-                        rbtOnScreen.IsChecked = false;
-                        rbtOffScreen.IsChecked = false;
-                        baseVideoPath = null;
-                        onscreenVideoPath = null;
-                        offscreenVideoPath = null;
-                        BaseVideoPath.Text = "No Basevideo Selected";
-                        OnScreenEndingPath.Text = "No Onscreen Ending Selected";
-                        OffScreenEndingPath.Text = "No Offscreen Ending Selected";
+                                //Save the video to the database
+                                Db.SaveVideo(startsOnScreen, baseVideoPath.Name, onscreenVideoPath.Name,
+                                    offscreenVideoPath.Name);
 
-                        //Feedback to user
-                        returntext = "Uploading Succeeded!";
+                                //Clear the input fields
+                                rbtOnScreen.IsChecked = false;
+                                rbtOffScreen.IsChecked = false;
+                                baseVideoPath = null;
+                                onscreenVideoPath = null;
+                                offscreenVideoPath = null;
+                                BaseVideoPath.Text = "No Basevideo Selected";
+                                OnScreenEndingPath.Text = "No Onscreen Ending Selected";
+                                OffScreenEndingPath.Text = "No Offscreen Ending Selected";
+
+                                //Feedback to user
+                                returntext = "Uploading Succeeded!";
+                            }
+                        }
+                        else
+                        {
+                            if (baseExists) returntext = "The basevideo already exists";
+                            if (onExists) returntext = "The onscreen ending already exists";
+                            if (offExists) returntext = "The offscreen ending already exists";
+                            if (baseExists && onExists && offExists) returntext = "all already exist!";
+                        }
                     }
                     catch (Exception ex)
                     {
-                        returntext = "file already exists.";
+                        returntext = "Whoops. Error on copying files.";
                     }
                 }
             }
@@ -185,7 +215,7 @@ namespace Ever_Afters.admin
             ThreadPoolTimer.CreatePeriodicTimer((t) =>
             {
                 ChangeText(upVideoTitle, "Upload Video");
-                upVideoSubmit.IsEnabled = true;
+                ReEnable(upVideoSubmit);
             }, TimeSpan.FromSeconds(4));
         }
 
@@ -257,12 +287,220 @@ namespace Ever_Afters.admin
 
         #endregion
 
+        #region upBindingGrid
+
+        private void PopulateBindTags()
+        {
+            //Clear the list
+            cboTags.ItemsSource = null;
+
+            //Retrieve the unbound tags
+            IEnumerable<Tag> tags = Db.GetUnboundTags();
+
+            //Set the list
+            cboTags.ItemsSource = tags;
+        }
+
+        private void PopulateBindVideo()
+        {
+            //Clear the list
+            cboVideo.ItemsSource = null;
+
+            //Retrieve the videos
+            IEnumerable<Video> videos = Db.GetAllVideos();
+
+            //Set the list
+            cboVideo.ItemsSource = videos;
+        }
+
+        private void BindTagSubmit_OnClick(object sender, RoutedEventArgs e)
+        {
+            String returntext = "Unknown Error";
+            bindTagSubmit.IsEnabled = false;
+
+            //Check if a selection has been made
+            Tag selectedTag = (Tag) cboTags.SelectedItem;
+            Video selectedVideo = (Video) cboVideo.SelectedItem;
+
+            if (selectedTag == null)
+            {
+                returntext = "Select a tag";
+            } else if (selectedVideo == null)
+            {
+                returntext = "Select a video";
+            } else
+            {
+                //Check if the tag is still unbound
+                if (common.Models.Tag.isBound(selectedTag.name))
+                {
+                    returntext = "The selected tag is already bound";
+                }
+                else
+                {
+                    //Bind the tag and the video
+                    Db.BindVideoToTag(selectedVideo, selectedTag);
+
+                    //Reset the display
+                    PopulateBindTags();
+                    PopulateBindVideo();
+                    returntext = "Binding successful";
+                }
+            }
+
+            bindTagTitle.Text = returntext;
+
+            //Reset the display
+            ThreadPoolTimer.CreatePeriodicTimer((t) =>
+            {
+                ChangeText(bindTagTitle, "Bind Tag To Video");
+                ReEnable(bindTagSubmit);
+            }, TimeSpan.FromSeconds(3));
+        }
+
+        #endregion
+
+        #region removeGrid
+
+        private void PopulateRemoveTags()
+        {
+            //Clear the list
+            cboAllTags.ItemsSource = null;
+
+            //Retrieve the unbound tags
+            IEnumerable<Tag> tags = Db.GetAllTags();
+
+            //Set the list
+            cboAllTags.ItemsSource = tags;
+        }
+
+        private void PopulateRemoveVideos()
+        {
+            //Clear the list
+            cboAllVideo.ItemsSource = null;
+
+            //Retrieve the videos
+            IEnumerable<Video> videos = Db.GetAllVideos();
+
+            //Set the list
+            cboAllVideo.ItemsSource = videos;
+        }
+
+        private void RemoveTagSubmit_OnClick(object sender, RoutedEventArgs e)
+        {
+            String returntext = "Unknown Error";
+            removeTagSubmit.IsEnabled = false;
+            removeVideoSubmit.IsEnabled = false;
+            Tag selectedTag = (Tag) cboAllTags.SelectedItem;
+
+            //Check if the user selected a tag
+            if (selectedTag == null)
+            {
+                returntext = "Select a Tag";
+            }
+            else
+            {
+                //Check if the tag still exists
+                if (common.Models.Tag.tagExists(selectedTag.name))
+                {
+                    //Check if the tag is bound. -> If yes, unbound
+                    if (common.Models.Tag.isBound(selectedTag.name))
+                    {
+                        Db.DeleteBinding(selectedTag);
+                    }
+
+                    //Delete the tag
+                    Db.DeleteTag(selectedTag.id);
+
+                    //Feedback to the user
+                    returntext = "Tag Successfully Removed";
+                }
+                else
+                {
+                    returntext = "The tag doesn't exist";
+                }
+            }
+
+            PopulateRemoveTags();
+            PopulateRemoveVideos();
+            removeTitle.Text = returntext;
+
+            //Reset the display
+            ThreadPoolTimer.CreatePeriodicTimer((t) =>
+            {
+                ChangeText(bindTagTitle, "Remove Tags/Videos");
+                ReEnable(removeTagSubmit);
+                ReEnable(removeVideoSubmit);
+            }, TimeSpan.FromSeconds(3));
+        }
+
+        private void RemoveVideoSubmit_OnClick(object sender, RoutedEventArgs e)
+        {
+            String returntext = "Unknown Error";
+            removeTagSubmit.IsEnabled = false;
+            removeVideoSubmit.IsEnabled = false;
+            Video selectedVideo = (Video) cboAllVideo.SelectedItem;
+
+            //Check if the user selected a video
+            if (selectedVideo == null)
+            {
+                returntext = "Select a Video";
+            }
+            else
+            {
+                //Check if the video still exists
+                if (Video.pathExists(selectedVideo.BasePath))
+                {
+                    //Check if the video still has any bindings -> If Yes, unbind
+                    IEnumerable<Tag> allTags = Db.GetAllTags();
+                    foreach (Tag tag in allTags)
+                    {
+                        if (selectedVideo.id == Db.LoadVideoFromTag(tag).id)
+                        {
+                            Db.DeleteBinding(tag);
+                        }
+                    }
+
+                    //Delete the video
+                    Db.DeleteVideo(selectedVideo.id);
+
+                    //Feedback to the user
+                    returntext = "Video successfully removed";
+                }
+                else
+                {
+                    returntext = "The Video doesn't exist";
+                }
+            }
+
+            PopulateRemoveTags();
+            PopulateRemoveVideos();
+            removeTitle.Text = returntext;
+
+            //Reset the display
+            ThreadPoolTimer.CreatePeriodicTimer((t) =>
+            {
+                ChangeText(bindTagTitle, "Remove Tags/Videos");
+                ReEnable(removeTagSubmit);
+                ReEnable(removeVideoSubmit);
+            }, TimeSpan.FromSeconds(3));
+        }
+
+        #endregion
+
         private async void ChangeText(TextBlock target, String text)
         {
             //Run the 'reset display' code (that was waiting asynchronously) on the UI thread.
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                 if (String.IsNullOrEmpty(text)) return;
                 target.Text = text;
+            });
+        }
+
+        private async void ReEnable(Button target)
+        {
+            //Run the 're-enable' code (that was waiting asynchronously) on the UI thread.
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                target.IsEnabled = true;
             });
         }
     }
