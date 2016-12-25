@@ -788,3 +788,5 @@ C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\qualifiers
 C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\ProjectArchitectures.txt
 C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.build.appxrecipe
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\SQLite.Net.Platform.WinRT.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\SQLite.Net.dll

@@ -24,7 +24,7 @@
             <TextBlock x:Name="bindTag" Grid.Column="2" Text="Assign Tags" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" PointerPressed="ToBindGrid" />
             <TextBlock x:Name="remove" Grid.Column="3" Text="Delete Tags/Videos" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" PointerPressed="ToRemoveGrid" />
         </Grid>
-        <Grid Grid.Row="1" x:Name="beginGrid">
+        <Grid Grid.Row="1" x:Name="beginGrid" Visibility="Visible">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Ever Afters Management Interface" FontSize="50" Foreground="White"/>
             </StackPanel>
@@ -53,6 +53,10 @@
                         <Button x:Name="SelectOffScreenEnding" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Select Offscreen Ending" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="OpenDialogOffscreenEnding"/>
                         <TextBlock x:Name="OffScreenEndingPath" Text="No Offscreen Ending Selected" Foreground="White" HorizontalAlignment="Center" />
                     </StackPanel>
+                </StackPanel>
+                <StackPanel Margin="0,30,0,0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <RadioButton x:Name="rbtOnScreen" Foreground="White" Content="Basevideo Starts Onscreen" Margin="0,0,30,0" Tag="Onscreen" />
+                    <RadioButton x:Name="rbtOffScreen" Foreground="White" Content="Basevideo Starts Offscreen" Tag="OffScreen"/>
                 </StackPanel>
                 <Button x:Name="upVideoSubmit" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="UpVideoSubmit"/>
             </StackPanel>

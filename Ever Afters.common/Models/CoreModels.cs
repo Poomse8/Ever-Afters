@@ -112,7 +112,7 @@ namespace Ever_Afters.common.Models
         public Video LoadVideoFromTag(Tag tag)
         {
             //String path = "";
-            String path = System.IO.Directory.GetCurrentDirectory() + "/Ever Afters.common/Resources/skel.mp4";
+            String path = Windows.Storage.ApplicationData.Current.LocalFolder.Path + "/Ever Afters.common/Resources/skel.mp4";
             return new Video()
             {
                 BasePath = path,

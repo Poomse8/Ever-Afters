@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Ever_Afters.common.DatabaseLayer;
 
 namespace Ever_Afters.admin
 {
@@ -30,6 +31,7 @@ namespace Ever_Afters.admin
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            SQLiteService.InitSQLite();
         }
 
         /// <summary>

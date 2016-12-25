@@ -2,12 +2,15 @@
 using Ever_Afters.common.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -15,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Ever_Afters.common.DatabaseLayer;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -25,7 +29,10 @@ namespace Ever_Afters.admin
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        DataRequestHandler db = null;
+        private DataRequestHandler _db;
+
+        public DataRequestHandler Db => _db ?? (_db = new SQLiteService());
+
 
         public MainPage()
         {
@@ -55,12 +62,14 @@ namespace Ever_Afters.admin
 
         private void ShowGrids(int gridNr)
         {
+            //Set Everything Hidden
             beginGrid.Visibility = Visibility.Collapsed;
             upTagGrid.Visibility = Visibility.Collapsed;
             upVideoGrid.Visibility = Visibility.Collapsed;
             bindTagGrid.Visibility = Visibility.Collapsed;
             removeGrid.Visibility = Visibility.Collapsed;
 
+            //Show the requested Grid
             switch (gridNr)
             {
                 case 0:
@@ -82,14 +91,17 @@ namespace Ever_Afters.admin
         #region upTagGrid
         private void SubmitUpTag(object sender, RoutedEventArgs e)
         {
+            //Check if tag is valid
+            upTagSubmit.IsEnabled = false;
             String returntext = "Unknown Error";
             String tagId = (String)upTagName.Text;
             if (!String.IsNullOrEmpty(tagId))
             {
-                bool exists = Ever_Afters.common.Models.Tag.tagExists(tagId);
+                bool exists = common.Models.Tag.tagExists(tagId);
                 if (!exists)
                 {
-                    db.SaveTag(tagId);
+                    //Save valid tag
+                    Db.SaveTag(tagId);
                     returntext = "Tag Saved Successfully";
                 } else
                 {
@@ -99,6 +111,13 @@ namespace Ever_Afters.admin
 
             upTagTitle.Text = returntext;
             upTagName.Text = "";
+
+            //Reset the display
+            ThreadPoolTimer.CreatePeriodicTimer((t) =>
+            {
+                ChangeText(upTagTitle, "Scan Tag");
+                upTagSubmit.IsEnabled = true;
+            }, TimeSpan.FromSeconds(3));
         }
         #endregion
 
@@ -110,36 +129,74 @@ namespace Ever_Afters.admin
 
         private async void UpVideoSubmit(object sender, RoutedEventArgs e)
         {
+            upVideoSubmit.IsEnabled = false;
             String returntext = "Unknown Error";
 
-            if(baseVideoPath != null && offscreenVideoPath != null && onscreenVideoPath != null)
+            //Check if the radiobutton choice is made
+            if (rbtOnScreen.IsChecked == null || rbtOffScreen.IsChecked == null) return;
+            if (rbtOffScreen.IsChecked.Value == false && rbtOnScreen.IsChecked.Value == false)
             {
-                try
+                returntext = "Select the beginning state radiobutton!";
+            }
+            else
+            {
+                //Check if all the videos were uploaded
+                if (baseVideoPath != null && offscreenVideoPath != null && onscreenVideoPath != null)
                 {
-                    String path = System.IO.Directory.GetCurrentDirectory() + "\\Ever Afters.common\\Resources";
-                    StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
+                    try
+                    {
+                        //Copy the videos to the resource directory
+                        String path = Directory.GetCurrentDirectory() + "\\Ever Afters.common\\Resources";
+                        StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
 
-                    await baseVideoPath.CopyAsync(folder);
-                    await offscreenVideoPath.CopyAsync(folder);
-                    await onscreenVideoPath.CopyAsync(folder);
+                        await baseVideoPath.CopyAsync(folder);
+                        await offscreenVideoPath.CopyAsync(folder);
+                        await onscreenVideoPath.CopyAsync(folder);
 
-                    returntext = "Uploading Succeeded!";
-                }
-                catch (Exception ex)
-                {
-                    returntext = "file already exists.";
+                        //Get the information about the beginning of the video
+                        bool startsOnScreen = rbtOnScreen.IsChecked.Value;
+
+                        //Save the video to the database
+                        Db.SaveVideo(startsOnScreen, baseVideoPath.Name, onscreenVideoPath.Name, offscreenVideoPath.Name);
+
+                        //Clear the input fields
+                        rbtOnScreen.IsChecked = false;
+                        rbtOffScreen.IsChecked = false;
+                        baseVideoPath = null;
+                        onscreenVideoPath = null;
+                        offscreenVideoPath = null;
+                        BaseVideoPath.Text = "No Basevideo Selected";
+                        OnScreenEndingPath.Text = "No Onscreen Ending Selected";
+                        OffScreenEndingPath.Text = "No Offscreen Ending Selected";
+
+                        //Feedback to user
+                        returntext = "Uploading Succeeded!";
+                    }
+                    catch (Exception ex)
+                    {
+                        returntext = "file already exists.";
+                    }
                 }
             }
 
             upVideoTitle.Text = returntext;
+
+            //Reset the display
+            ThreadPoolTimer.CreatePeriodicTimer((t) =>
+            {
+                ChangeText(upVideoTitle, "Upload Video");
+                upVideoSubmit.IsEnabled = true;
+            }, TimeSpan.FromSeconds(4));
         }
 
         private async void OpenDialogBaseVideo(object sender, RoutedEventArgs e)
         {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation =
-                Windows.Storage.Pickers.PickerLocationId.VideosLibrary;
+            //Show the dialog for selecting the base video
+            var picker = new Windows.Storage.Pickers.FileOpenPicker
+            {
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary
+            };
             picker.FileTypeFilter.Add(".mp4");
 
             StorageFile file = await picker.PickSingleFileAsync();
@@ -156,10 +213,12 @@ namespace Ever_Afters.admin
 
         private async void OpenDialogOnscreenEnding(object sender, RoutedEventArgs e)
         {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation =
-                Windows.Storage.Pickers.PickerLocationId.VideosLibrary;
+            //Show the dialog for selecting an onscreen ending
+            var picker = new Windows.Storage.Pickers.FileOpenPicker
+            {
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary
+            };
             picker.FileTypeFilter.Add(".mp4");
 
             StorageFile file = await picker.PickSingleFileAsync();
@@ -176,10 +235,12 @@ namespace Ever_Afters.admin
 
         private async void OpenDialogOffscreenEnding(object sender, RoutedEventArgs e)
         {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation =
-                Windows.Storage.Pickers.PickerLocationId.VideosLibrary;
+            //Show the dialog for selecting an offscreen ending
+            var picker = new Windows.Storage.Pickers.FileOpenPicker
+            {
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary
+            };
             picker.FileTypeFilter.Add(".mp4");
 
             StorageFile file = await picker.PickSingleFileAsync();
@@ -195,5 +256,14 @@ namespace Ever_Afters.admin
         }
 
         #endregion
+
+        private async void ChangeText(TextBlock target, String text)
+        {
+            //Run the 'reset display' code (that was waiting asynchronously) on the UI thread.
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                if (String.IsNullOrEmpty(text)) return;
+                target.Text = text;
+            });
+        }
     }
 }
