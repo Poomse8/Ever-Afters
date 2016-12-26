@@ -46,4 +46,12 @@
   <Capabilities>
     <Capability Name="internetClient" />
   </Capabilities>
+
+  <Extensions>
+    <Extension Category="windows.publisherCacheFolders">
+      <PublisherCacheFolders>
+        <Folder Name="EverAfters" />
+      </PublisherCacheFolders>
+    </Extension>
+  </Extensions>
 </Package>

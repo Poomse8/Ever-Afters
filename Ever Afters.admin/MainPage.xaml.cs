@@ -2,6 +2,7 @@
 using Ever_Afters.common.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Windows.Storage;
@@ -152,7 +153,7 @@ namespace Ever_Afters.admin
                     try
                     {
                         //Make sure that the resources directory exists
-                        String path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Resources");
+                        String path = Path.Combine(ApplicationData.Current.GetPublisherCacheFolder("EverAfters").Path, "Resources");
                         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
                         //Check if one of the videos doesn't exist yet
@@ -206,6 +207,7 @@ namespace Ever_Afters.admin
                     }
                     catch (Exception ex)
                     {
+                        Debug.WriteLine(ex.InnerException);
                         returntext = "Whoops. Error on copying files.";
                     }
                 }
@@ -453,7 +455,7 @@ namespace Ever_Afters.admin
                 if (Video.pathExists(selectedVideo.BasePath))
                 {
                     //Make sure that the resources directory exists
-                    String path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Resources");
+                    String path = Path.Combine(ApplicationData.Current.GetPublisherCacheFolder("EverAfters").Path, "Resources");
                     if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
                     //Check if the video files still exist in the application directory
@@ -512,7 +514,7 @@ namespace Ever_Afters.admin
         private async void ChangeText(TextBlock target, String text)
         {
             //Run the 'reset display' code (that was waiting asynchronously) on the UI thread.
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
                 if (String.IsNullOrEmpty(text)) return;
                 target.Text = text;
             });
@@ -521,7 +523,7 @@ namespace Ever_Afters.admin
         private async void ReEnable(Button target)
         {
             //Run the 're-enable' code (that was waiting asynchronously) on the UI thread.
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
                 target.IsEnabled = true;
             });
         }

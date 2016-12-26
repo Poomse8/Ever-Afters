@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ever_Afters.common.Models;
 using System.IO;
+using Windows.Storage;
 using SQLite.Net;
 using Ever_Afters.common.Core;
 
@@ -13,7 +14,7 @@ namespace Ever_Afters.common.DatabaseLayer
 {
     public class SQLiteService : DataRequestHandler
     {
-        private static string path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "EverAfters.sqlite");
+        private static string path = Path.Combine(ApplicationData.Current.GetPublisherCacheFolder("EverAfters").Path, "EverAfters.sqlite");
         private static string MovieTabelNaam = "movie";
         private static string TagTabelNaam = "tag";
 

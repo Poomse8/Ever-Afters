@@ -114,7 +114,7 @@ namespace Ever_Afters.common.Models
         {
             //String path = "";
             //String path = ApplicationData.Current.LocalFolder.Path + "/Resources/skel.mp4";
-            String path = ApplicationData.Current.LocalFolder.Path + "/Ever Afters.common/Resources/skel.mp4";
+            String path = ApplicationData.Current.GetPublisherCacheFolder("EverAfters").Path + "/Ever Afters.common/Resources/skel.mp4";
             return new Video()
             {
                 BasePath = path,

@@ -13,7 +13,7 @@ namespace Ever_Afters.common.Core
     {
         private const int RenderEngineLeadTime = 20; //In Ms
 
-        private readonly String _path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Resources");
+        private readonly String _path = Path.Combine(ApplicationData.Current.GetPublisherCacheFolder("EverAfters").Path, "Resources");
 
         #region SingleTon
 

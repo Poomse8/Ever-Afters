@@ -9,18 +9,18 @@
     <SolutionConfiguration>Debug|x86</SolutionConfiguration>
     <PackageArchitecture>x86</PackageArchitecture>
     <PackageIdentityName>03e0ae0f-879b-43c2-b886-ee509c046390</PackageIdentityName>
-    <PackageIdentityPublisher>CN=Nicol</PackageIdentityPublisher>
+    <PackageIdentityPublisher>CN=esteb</PackageIdentityPublisher>
     <IntermediateOutputPath>C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\</IntermediateOutputPath>
     <RemoteDeploymentType>
     </RemoteDeploymentType>
     <PackageRegistrationPath>
     </PackageRegistrationPath>
     <RemoveNonLayoutFiles>true</RemoveNonLayoutFiles>
-    <RegisteredManifestChecksum>00BA74E886D0D45D21017BE235F81875D1231981A85EBC6658ACD84418E8C340</RegisteredManifestChecksum>
-    <RegisteredPackageMoniker>03e0ae0f-879b-43c2-b886-ee509c046390_1.0.0.0_x86__fc4xj6m3fw0xc</RegisteredPackageMoniker>
-    <RegisteredUserModeAppID>03e0ae0f-879b-43c2-b886-ee509c046390_fc4xj6m3fw0xc!App</RegisteredUserModeAppID>
+    <RegisteredManifestChecksum>922264CC1549CAB83BA4FD2301086AC6DF286B473671FB45A6C87BCD94618248</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>03e0ae0f-879b-43c2-b886-ee509c046390_1.0.0.0_x86__8n8r88w2ydt04</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>03e0ae0f-879b-43c2-b886-ee509c046390_8n8r88w2ydt04!App</RegisteredUserModeAppID>
     <RegisteredPackageID>03e0ae0f-879b-43c2-b886-ee509c046390</RegisteredPackageID>
-    <RegisteredPackagePublisher>CN=Nicol</RegisteredPackagePublisher>
+    <RegisteredPackagePublisher>CN=esteb</RegisteredPackagePublisher>
     <RegisteredVersion>1.0.0.0</RegisteredVersion>
     <JitOptimizationSuppressed>True</JitOptimizationSuppressed>
   </PropertyGroup>
@@ -28,13 +28,13 @@
     <AppXManifest Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-12-26T15:29:07.632</Modified>
+      <Modified>2016-12-26T17:36:45.355</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.exe">
       <PackagePath>entrypoint\Ever Afters.exe</PackagePath>
-      <Modified>2016-12-26T15:29:06.733</Modified>
+      <Modified>2016-12-26T17:36:44.721</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\Microsoft.CSharp\4.0.0\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -458,7 +458,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\bin\x86\Debug\Ever Afters.common.dll">
       <PackagePath>Ever Afters.common.dll</PackagePath>
-      <Modified>2016-12-26T15:25:41.608</Modified>
+      <Modified>2016-12-26T17:18:46.631</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
@@ -517,11 +517,11 @@
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-12-26T15:29:07.524</Modified>
+      <Modified>2016-12-26T17:36:45.230</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\Core\Ever Afters.exe">
       <PackagePath>Ever Afters.exe</PackagePath>
-      <Modified>2016-12-26T15:29:07.628</Modified>
+      <Modified>2016-12-26T17:36:45.346</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

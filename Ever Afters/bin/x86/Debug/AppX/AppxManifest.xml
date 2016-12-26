@@ -7,11 +7,11 @@
 
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
-  <Identity Name="03e0ae0f-879b-43c2-b886-ee509c046390" Publisher="CN=Nicol" Version="1.0.0.0" ProcessorArchitecture="x86" />
+  <Identity Name="03e0ae0f-879b-43c2-b886-ee509c046390" Publisher="CN=esteb" Version="1.0.0.0" ProcessorArchitecture="x86" />
   <mp:PhoneIdentity PhoneProductId="03e0ae0f-879b-43c2-b886-ee509c046390" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Ever Afters</DisplayName>
-    <PublisherDisplayName>Nicol</PublisherDisplayName>
+    <PublisherDisplayName>esteb</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -30,6 +30,13 @@
       </uap:VisualElements>
     </Application>
   </Applications>
+  <Extensions>
+    <Extension Category="windows.publisherCacheFolders">
+      <PublisherCacheFolders>
+        <Folder Name="EverAfters" />
+      </PublisherCacheFolders>
+    </Extension>
+  </Extensions>
   <build:Metadata>
     <build:Item Name="TargetFrameworkMoniker" Value=".NETCore,Version=v5.0" />
     <build:Item Name="VisualStudio" Version="14.0" />

@@ -55,7 +55,7 @@ namespace Ever_Afters
             //DUMMY: Pointer Released servers as DAL.
             if (toggle == false)
             {
-                il.OnTagAdded(Sensors.NFC_RIGHT_MIDDLE, "TEST01");
+                il.OnTagAdded(Sensors.NFC_RIGHT_MIDDLE, "TEST06");
                 toggle = true;
             }
             else

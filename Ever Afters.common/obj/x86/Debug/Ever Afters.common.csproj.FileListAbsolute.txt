@@ -1,7 +1,6 @@
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\bin\x86\Debug\Ever Afters.common.dll
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\bin\x86\Debug\Ever Afters.common.pdb
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\bin\x86\Debug\Ever Afters.common.pri
-C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\Ever Afters.common.csprojResolveAssemblyReference.cache
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\Ever Afters.common.dll
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\Ever Afters.common.pdb
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\priconfig.xml
