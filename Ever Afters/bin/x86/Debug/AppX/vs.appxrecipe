@@ -28,13 +28,13 @@
     <AppXManifest Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-12-26T15:11:10.801</Modified>
+      <Modified>2016-12-26T15:29:07.632</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.exe">
       <PackagePath>entrypoint\Ever Afters.exe</PackagePath>
-      <Modified>2016-12-26T15:11:10.579</Modified>
+      <Modified>2016-12-26T15:29:06.733</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\Microsoft.CSharp\4.0.0\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -458,7 +458,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\bin\x86\Debug\Ever Afters.common.dll">
       <PackagePath>Ever Afters.common.dll</PackagePath>
-      <Modified>2016-12-26T15:11:09.463</Modified>
+      <Modified>2016-12-26T15:25:41.608</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
@@ -500,7 +500,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.xr.xml">
       <PackagePath>Ever Afters.xr.xml</PackagePath>
-      <Modified>2016-12-26T14:46:16.650</Modified>
+      <Modified>2016-12-26T15:29:06.631</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\UAP\v0.8.0.0\ExtensionSDKs\SQLite.UWP.2015\3.15.2\Redist\Debug\x86\sqlite3.dll">
       <PackagePath>sqlite3.dll</PackagePath>
@@ -517,11 +517,11 @@
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-12-26T14:46:17.528</Modified>
+      <Modified>2016-12-26T15:29:07.524</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\Core\Ever Afters.exe">
       <PackagePath>Ever Afters.exe</PackagePath>
-      <Modified>2016-12-26T15:11:10.797</Modified>
+      <Modified>2016-12-26T15:29:07.628</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
