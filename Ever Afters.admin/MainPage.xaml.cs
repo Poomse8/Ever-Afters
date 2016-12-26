@@ -3,8 +3,11 @@ using Ever_Afters.common.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Windows.Storage;
+using Windows.System;
 using Windows.System.Threading;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -27,6 +30,7 @@ namespace Ever_Afters.admin
         public MainPage()
         {
             this.InitializeComponent();
+            Window.Current.CoreWindow.KeyDown += Keydown;
         }
 
         #region GridNavigation
@@ -78,7 +82,20 @@ namespace Ever_Afters.admin
                 case 3:
                     removeGrid.Visibility = Visibility.Visible;
                     break;
+                default:
+                    beginGrid.Visibility = Visibility.Visible;
+                    break;
             }
+        }
+
+        private int GetActiveGrid()
+        {
+            if (beginGrid.Visibility == Visibility.Visible) return 0;
+            if (upTagGrid.Visibility == Visibility.Visible) return 1;
+            if (upVideoGrid.Visibility == Visibility.Visible) return 2;
+            if (bindTagGrid.Visibility == Visibility.Visible) return 3;
+            if (removeGrid.Visibility == Visibility.Visible) return 4;
+            return 5;
         }
         #endregion
 
@@ -107,7 +124,7 @@ namespace Ever_Afters.admin
             upTagName.Text = "";
 
             //Reset the display
-            ThreadPoolTimer.CreatePeriodicTimer((t) =>
+            ThreadPoolTimer.CreateTimer((t) =>
             {
                 ChangeText(upTagTitle, "Scan Tag");
                 ReEnable(upTagSubmit);
@@ -202,7 +219,7 @@ namespace Ever_Afters.admin
             upVideoTitle.Text = returntext;
 
             //Reset the display
-            ThreadPoolTimer.CreatePeriodicTimer((t) =>
+            ThreadPoolTimer.CreateTimer((t) =>
             {
                 ChangeText(upVideoTitle, "Upload Video");
                 ReEnable(upVideoSubmit);
@@ -340,7 +357,7 @@ namespace Ever_Afters.admin
             bindTagTitle.Text = returntext;
 
             //Reset the display
-            ThreadPoolTimer.CreatePeriodicTimer((t) =>
+            ThreadPoolTimer.CreateTimer((t) =>
             {
                 ChangeText(bindTagTitle, "Bind Tag To Video");
                 ReEnable(bindTagSubmit);
@@ -415,9 +432,9 @@ namespace Ever_Afters.admin
             removeTitle.Text = returntext;
 
             //Reset the display
-            ThreadPoolTimer.CreatePeriodicTimer((t) =>
+            ThreadPoolTimer.CreateTimer((t) =>
             {
-                ChangeText(bindTagTitle, "Remove Tags/Videos");
+                ChangeText(removeTitle, "Remove Tags/Videos");
                 ReEnable(removeTagSubmit);
                 ReEnable(removeVideoSubmit);
             }, TimeSpan.FromSeconds(3));
@@ -437,24 +454,44 @@ namespace Ever_Afters.admin
             }
             else
             {
-                //Check if the video still exists
+                //Check if the video still exists in the database
                 if (Video.pathExists(selectedVideo.BasePath))
                 {
-                    //Check if the video still has any bindings -> If Yes, unbind
-                    IEnumerable<Tag> allTags = Db.GetAllTags();
-                    foreach (Tag tag in allTags)
+                    //Make sure that the resources directory exists
+                    String path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Resources");
+                    if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+                    //Check if the video files still exist in the application directory
+                    bool baseExists = File.Exists(Path.Combine(path, selectedVideo.BasePath));
+                    bool onExists = File.Exists(Path.Combine(path, selectedVideo.OnScreenEndingPath));
+                    bool offExists = File.Exists(Path.Combine(path, selectedVideo.OffScreenEndingPath));
+
+                    if (baseExists && onExists && offExists)
                     {
-                        if (selectedVideo.id == Db.LoadVideoFromTag(tag).id)
+                        //Check if the video still has any bindings -> If Yes, unbind
+                        if (selectedVideo.TAGS.Any())
                         {
-                            Db.DeleteBinding(tag);
+                            IEnumerable<Tag> allTags = Db.GetAllTags();
+                            List<Tag> boundTags =
+                                (from t in allTags where selectedVideo.TAGS.Contains(t.name) select t).ToList<Tag>();
+                            foreach (Tag tag in boundTags) Db.DeleteBinding(tag);
                         }
+
+                        //Delete the video in the database
+                        Db.DeleteVideo(selectedVideo.id);
+
+                        //Delete the video from the application directory
+                        File.Delete(Path.Combine(path, selectedVideo.BasePath));
+                        File.Delete(Path.Combine(path, selectedVideo.OnScreenEndingPath));
+                        File.Delete(Path.Combine(path, selectedVideo.OffScreenEndingPath));
+
+                        //Feedback to the user
+                        returntext = "Video successfully removed";
                     }
-
-                    //Delete the video
-                    Db.DeleteVideo(selectedVideo.id);
-
-                    //Feedback to the user
-                    returntext = "Video successfully removed";
+                    else
+                    {
+                        returntext = "Error: Files not found.";
+                    }
                 }
                 else
                 {
@@ -467,9 +504,9 @@ namespace Ever_Afters.admin
             removeTitle.Text = returntext;
 
             //Reset the display
-            ThreadPoolTimer.CreatePeriodicTimer((t) =>
+            ThreadPoolTimer.CreateTimer((t) =>
             {
-                ChangeText(bindTagTitle, "Remove Tags/Videos");
+                ChangeText(removeTitle, "Remove Tags/Videos");
                 ReEnable(removeTagSubmit);
                 ReEnable(removeVideoSubmit);
             }, TimeSpan.FromSeconds(3));
@@ -492,6 +529,32 @@ namespace Ever_Afters.admin
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                 target.IsEnabled = true;
             });
+        }
+
+        private void Keydown(CoreWindow sender, KeyEventArgs args)
+        {
+            //Set the enter key functionality
+            if (args.VirtualKey == VirtualKey.Enter)
+            {
+                switch (GetActiveGrid())
+                {
+                    case 1: //Upload Tag
+                        SubmitUpTag(null, null);
+                        break;
+                    case 2: //Upload Video
+                        UpVideoSubmit(null, null);
+                        break;
+                    case 3: //Bind tag to video
+                        BindTagSubmit_OnClick(null, null);
+                        break;
+                    default:
+                        ShowGrids(-1);
+                        break;
+                }
+            } else if (args.VirtualKey == VirtualKey.Escape)
+            {
+                ShowGrids(-1);
+            }
         }
     }
 }
