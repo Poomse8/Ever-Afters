@@ -54,7 +54,19 @@ namespace Ever_Afters.common.Listeners
         /// <returns></returns>
         IEnumerable<Tag> GetUnboundTags();
 
-        //UPDATE - ID of the object given matches the ID of the object that has to be changed.
+        /// <summary>
+        /// This function gives all the tags present in the database.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<Tag> GetAllTags();
+
+        /// <summary>
+        /// This function gives all the videos present in the database.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<Video> GetAllVideos();
+
+            //UPDATE - ID of the object given matches the ID of the object that has to be changed.
         Tag UpdateTag(Tag UpdatedTag);
         Video UpdateVideo(Video UpdatedVideo); //Only the BaseStartsOnScreen, BasePath, OnScreenEndingPath, OffScreenEndingPath
 

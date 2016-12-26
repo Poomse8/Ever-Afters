@@ -1,0 +1,90 @@
+﻿<Page
+    x:Class="Ever_Afters.admin.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ever_Afters.admin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="#FF178CCF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="upTag" Grid.Column="0" Text="Upload Tag" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" PointerPressed="ToTagGrid" />
+            <TextBlock x:Name="upVideo" Grid.Column="1" Text="Upload Video" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" PointerPressed="ToVideoGrid" />
+            <TextBlock x:Name="bindTag" Grid.Column="2" Text="Assign Tags" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" PointerPressed="ToBindGrid" />
+            <TextBlock x:Name="remove" Grid.Column="3" Text="Delete Tags/Videos" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" PointerPressed="ToRemoveGrid" />
+        </Grid>
+        <Grid Grid.Row="1" x:Name="beginGrid" Visibility="Visible">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Ever Afters Management Interface" FontSize="50" Foreground="White"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" x:Name="upTagGrid" Visibility="Collapsed">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="upTagTitle" HorizontalAlignment="Center" Margin="0,0,0,50" TextWrapping="Wrap" Text="Scan Tag" FontSize="50" Foreground="White"/>
+                <TextBlock Text="TagID:" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBox x:Name="upTagName" />
+                <Button x:Name="upTagSubmit" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="SubmitUpTag"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" x:Name="upVideoGrid" Visibility="Collapsed">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="upVideoTitle" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Upload Video" FontSize="50" Foreground="White"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button x:Name="SelectBaseVideo" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Select Base Video" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="OpenDialogBaseVideo"/>
+                        <TextBlock x:Name="BaseVideoPath" Text="No Basevideo Selected" Foreground="White" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0">
+                        <Button x:Name="SelectOnscreenEnding" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Select Onscreen Ending" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="OpenDialogOnscreenEnding"/>
+                        <TextBlock x:Name="OnScreenEndingPath" Text="No Onscreen Ending Selected" Foreground="White" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="50,0,0,0">
+                        <Button x:Name="SelectOffScreenEnding" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Select Offscreen Ending" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="OpenDialogOffscreenEnding"/>
+                        <TextBlock x:Name="OffScreenEndingPath" Text="No Offscreen Ending Selected" Foreground="White" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Margin="0,30,0,0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <RadioButton x:Name="rbtOnScreen" Foreground="White" Content="Basevideo Starts Onscreen" Margin="0,0,30,0" Tag="Onscreen" />
+                    <RadioButton x:Name="rbtOffScreen" Foreground="White" Content="Basevideo Starts Offscreen" Tag="OffScreen"/>
+                </StackPanel>
+                <Button x:Name="upVideoSubmit" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="UpVideoSubmit"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" x:Name="bindTagGrid" Visibility="Collapsed">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="bindTagTitle" HorizontalAlignment="Center" Margin="0,0,0,50" TextWrapping="Wrap" Text="Bind Tag To Video" FontSize="50" Foreground="White"/>
+                <TextBlock Text="TagID:" Foreground="White" HorizontalAlignment="Center"/>
+                <ComboBox HorizontalAlignment="Center" x:Name="cboTags" />
+                <TextBlock Text="VideoPath:" Foreground="White" HorizontalAlignment="Center" />
+                <ComboBox HorizontalAlignment="Center" x:Name="cboVideo" />
+                <Button x:Name="bindTagSubmit" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="BindTagSubmit_OnClick"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" x:Name="removeGrid" Visibility="Collapsed">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="removeTitle" HorizontalAlignment="Center" Margin="0,0,0,50" TextWrapping="Wrap" Text="Remove Tags/Videos" FontSize="50" Foreground="White"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Tag:" Foreground="White" HorizontalAlignment="Center"/>
+                    <ComboBox HorizontalAlignment="Center" Margin="50,0,0,0" x:Name="cboAllTags" />
+                    <Button x:Name="removeTagSubmit" Margin="50,0,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="RemoveTagSubmit_OnClick"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="VideoPath:" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <ComboBox HorizontalAlignment="Center" Margin="50,0,0,0" x:Name="cboAllVideo" />
+                    <Button x:Name="removeVideoSubmit" Margin="50,0,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="RemoveVideoSubmit_OnClick"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

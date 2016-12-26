@@ -7,11 +7,11 @@
 
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
-  <Identity Name="03e0ae0f-879b-43c2-b886-ee509c046390" Publisher="CN=Nicol" Version="1.0.0.0" ProcessorArchitecture="x86" />
+  <Identity Name="03e0ae0f-879b-43c2-b886-ee509c046390" Publisher="CN=esteb" Version="1.0.0.0" ProcessorArchitecture="x86" />
   <mp:PhoneIdentity PhoneProductId="03e0ae0f-879b-43c2-b886-ee509c046390" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Ever Afters</DisplayName>
-    <PublisherDisplayName>Nicol</PublisherDisplayName>
+    <PublisherDisplayName>esteb</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -28,6 +28,13 @@
       </uap:VisualElements>
     </Application>
   </Applications>
+  <Extensions>
+    <Extension Category="windows.publisherCacheFolders">
+      <PublisherCacheFolders>
+        <Folder Name="EverAfters" />
+      </PublisherCacheFolders>
+    </Extension>
+  </Extensions>
   <build:Metadata>
     <build:Item Name="TargetFrameworkMoniker" Value=".NETCore,Version=v5.0" />
     <build:Item Name="VisualStudio" Version="14.0" />
@@ -38,7 +45,7 @@
     <build:Item Name="OptimizingToolset" Value="None" />
     <build:Item Name="TargetRuntime" Value="Managed" />
     <build:Item Name="Microsoft.Windows.UI.Xaml.Build.Tasks.dll" Version="14.0.25527.1" />
-    <build:Item Name="SQLite.UAP.2015" Version="3.9.2" />
+    <build:Item Name="SQLite.UWP.2015" Version="3.15.2" />
     <build:Item Name="MakePri.exe" Version="10.0.14393.33 (rs1_release_sec.160727-1952)" />
   </build:Metadata>
 </Package>

@@ -1,37 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Media.Core;
-using Windows.Storage;
-using Windows.Storage.FileProperties;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Ever_Afters.common.Core;
 using Ever_Afters.common.Enums;
 using Ever_Afters.common.Listeners;
-using Ever_Afters.common.Models;
 using Ever_Afters.common.DatabaseLayer;
 using Ever_Afters.common.DAL;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace Ever_Afters
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page, IVisualisationHandler
     {
         private InputChangedListener il;
@@ -47,7 +30,6 @@ namespace Ever_Afters
         public MainPage()
         {
             this.InitializeComponent();
-            InitialiseEngine();
             this.Loaded += MainPage_Loaded;
             InitialiseEngine();
             InitializeNfc();
@@ -62,9 +44,10 @@ namespace Ever_Afters
 
         public void InitialiseEngine()
         {
-            //Register the screen in the engine.
-            Engine.NewInstance().Screen = this;
-            il = Engine.NewInstance();
+            //Register the screen & database in the engine.
+            Engine.CurrentEngine.Screen = this;
+            Engine.CurrentEngine.Database = SQLiteService.CurrentInstance;
+            il = Engine.CurrentEngine;
         }
 
         private void OnPointerReleased(object sender, PointerRoutedEventArgs e)
@@ -72,7 +55,7 @@ namespace Ever_Afters
             //DUMMY: Pointer Released servers as DAL.
             if (toggle == false)
             {
-                il.OnTagAdded(Sensors.NFC_RIGHT_MIDDLE, "SKEL");
+                il.OnTagAdded(Sensors.NFC_RIGHT_MIDDLE, "TEST06");
                 toggle = true;
             }
             else
@@ -92,10 +75,14 @@ namespace Ever_Afters
 
         public void PlayVideo(Uri uri)
         {
+            //Start the video
             mediaPlayer.Stop();
             mediaPlayer.Source = uri;
             mediaPlayer.Play();
             mediaPlayer.AutoPlay = true;
+
+            //Log to console
+            Debug.WriteLine(uri.Segments.Last());
         }
 
         public void StopVideo()
@@ -131,6 +118,7 @@ namespace Ever_Afters
         }
 
         #endregion
+
         #region NFcInput & Buttons (Nico)
 
         private void btnReader_Click(object sender, RoutedEventArgs e)

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Ever_Afters.common.Core;
 using Ever_Afters.common.Listeners;
 
@@ -111,7 +112,9 @@ namespace Ever_Afters.common.Models
 
         public Video LoadVideoFromTag(Tag tag)
         {
-            String path = System.IO.Directory.GetCurrentDirectory() + "/Ever Afters.common/Resources/skel.mp4";
+            //String path = "";
+            //String path = ApplicationData.Current.LocalFolder.Path + "/Resources/skel.mp4";
+            String path = ApplicationData.Current.GetPublisherCacheFolder("EverAfters").Path + "/Ever Afters.common/Resources/skel.mp4";
             return new Video()
             {
                 BasePath = path,
@@ -127,6 +130,16 @@ namespace Ever_Afters.common.Models
         public IEnumerable<Tag> GetUnboundTags()
         {
             return new List<Tag>();
+        }
+
+        public IEnumerable<Tag> GetAllTags()
+        {
+            return new List<Tag>();
+        }
+
+        public IEnumerable<Video> GetAllVideos()
+        {
+            return new List<Video>();
         }
 
         public Tag UpdateTag(Tag UpdatedTag)

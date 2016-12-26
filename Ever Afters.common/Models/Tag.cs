@@ -12,6 +12,7 @@ namespace Ever_Afters.common.Models
         //General Database Fields
         public int id { get; set; }
         public String name { get; set; }
+        public int videoid { get; set; }
 
         /// <summary>
         /// This is an empty constructor meant for data binding at boot time.
@@ -56,10 +57,11 @@ namespace Ever_Afters.common.Models
             SQLiteService sql = new SQLiteService();
             List<Tag> tags = sql.GetUnboundTags().ToList<Tag>();
             Tag tag = sql.LoadTagByName(TagName);
-            if (!tags.Contains(tag))
-                return true;
+
+            if ((from t in tags where tag.id == t.id select t).Any())
+                return false; //if the id is found in the unbound list -> tag isn't bound
             else
-                return false;
+                return true;
         }
 
         //Overrides

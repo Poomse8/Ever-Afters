@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Ever_Afters.common.Enums;
 using Ever_Afters.common.Listeners;
 using Ever_Afters.common.Models;
@@ -10,6 +12,8 @@ namespace Ever_Afters.common.Core
     public class Engine : InputChangedListener
     {
         private const int RenderEngineLeadTime = 20; //In Ms
+
+        private readonly String _path = Path.Combine(ApplicationData.Current.GetPublisherCacheFolder("EverAfters").Path, "Resources");
 
         #region SingleTon
 
@@ -35,20 +39,17 @@ namespace Ever_Afters.common.Core
 
         #endregion
 
-        public static Engine CurrentEngine { get; private set; }
+        private static Engine _engine;
 
-        public static Engine NewInstance(DataRequestHandler db = null, IVisualisationHandler scn = null)
-        {
-            if(db == null) db = new Skel_Db();
-            if(scn == null) scn = new Skel_Screen();
-
-            return CurrentEngine ?? (CurrentEngine = new Engine(db, scn));
-        }
+        public static Engine CurrentEngine => _engine ?? (_engine = new Engine(new Skel_Db(), new Skel_Screen()));
 
         public Engine(DataRequestHandler db, IVisualisationHandler screen)
         {
             Database = db;
             Screen = screen;
+
+            //Make sure that the resources directory exists
+            if (!Directory.Exists(_path)) Directory.CreateDirectory(_path);
         }
 
         #endregion
@@ -57,7 +58,6 @@ namespace Ever_Afters.common.Core
 
         private async void Ignite()
         {
-            Debug.WriteLine("Ignited");
             //1. Check if the engine isn't already working
             if (!Ignited)
             {
@@ -132,10 +132,27 @@ namespace Ever_Afters.common.Core
             //1. Get the next video from the queue
             Video next = Queue.GiveNextVideo();
 
-            //2. Replace the field and order the screen to play
-            CurrentlyPlaying = PlayingVideo.MakeFromVideo(next);
-            CurrentlyPlaying.SetBase();
-            Screen.PlayVideo(new Uri(next.BasePath));
+            //2. Set the path relative to the current running instance
+            next.BasePath = Path.Combine(_path, next.BasePath);
+            next.OnScreenEndingPath = Path.Combine(_path, next.OnScreenEndingPath);
+            next.OffScreenEndingPath = Path.Combine(_path, next.OffScreenEndingPath);
+
+            //3. Check if the video is valid - Do all the files exist?
+            bool baseExists = File.Exists(next.BasePath);
+            bool onExists = File.Exists(next.OnScreenEndingPath);
+            bool offExists = File.Exists(next.OffScreenEndingPath);
+
+            if (baseExists && onExists && offExists)
+            {
+                //4. Replace the field and order the screen to play
+                CurrentlyPlaying = PlayingVideo.MakeFromVideo(next);
+                CurrentlyPlaying.SetBase();
+                Screen.PlayVideo(new Uri(next.BasePath));
+            }
+            else
+            {
+                Debug.WriteLine("The requested video files don't exist!");
+            }
         }
 
         private void PushNextOnScreenEnding()
@@ -196,6 +213,9 @@ namespace Ever_Afters.common.Core
 
         public void OnTagAdded(Sensors sensor, string TagIdentifier)
         {
+            //Log to console
+            Debug.WriteLine("Tag added: " + TagIdentifier);
+
             //1. Resolve tag from database
             Video vid = ResolveTag(TagIdentifier);
             if (vid == null) return;
@@ -209,6 +229,9 @@ namespace Ever_Afters.common.Core
 
         public void OnTagRemoved(Sensors sensor)
         {
+            //Log to console
+            Debug.WriteLine("Tag removed");
+
             //1. Pass command through queue
             Queue.RemoveFromQueue(SensorQueueConverter.Convert(sensor));
         }
