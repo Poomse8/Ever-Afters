@@ -207,9 +207,28 @@ namespace Ever_Afters.common.DatabaseLayer
         {
             using (SQLiteConnection conn = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path))
             {
-                string command = "SELECT id, basepath,onscreen_ending,offscreen_ending FROM " + MovieTabelNaam;
+                string command = "SELECT id,basestart,basepath,onscreen_ending,offscreen_ending FROM " + MovieTabelNaam;
                 object[] args = new object[] { null };
                 IEnumerable<Video> videos = conn.Query<Video>(command, args);
+                List<Tag> tags = GetAllTags().ToList<Tag>();
+                foreach(Video v in videos)
+                {
+                    List<string> tag = new List<string>();
+                    foreach (Tag t in tags)
+                    {
+                       
+                        if (t.videoid == v.id)
+                        {
+                            tag.Add(t.name);
+                        }
+                    }
+                    if (tag.Count != 0)
+                    {
+                        v.TAGS = tag;
+                    }
+                   
+                }
+            
                 return videos;
             }
         }

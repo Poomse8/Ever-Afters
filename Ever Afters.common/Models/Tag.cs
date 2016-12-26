@@ -12,6 +12,7 @@ namespace Ever_Afters.common.Models
         //General Database Fields
         public int id { get; set; }
         public String name { get; set; }
+        public int videoid { get; set; }
 
         /// <summary>
         /// This is an empty constructor meant for data binding at boot time.
