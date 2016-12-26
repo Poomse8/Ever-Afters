@@ -9,13 +9,9 @@ namespace Ever_Afters.common.Core
     {
         #region SingleTon
 
-        public static Queue CurrentInstance { get; private set; }
+        private static Queue _queue;
 
-        //SINGLETON PATTERN
-        public static Queue NewInstance()
-        {
-            return CurrentInstance ?? (CurrentInstance = new Queue());
-        }
+        public static Queue CurrentInstance => _queue ?? (_queue = new Queue());
 
         #endregion
 

@@ -17,10 +17,13 @@ namespace Ever_Afters.common.DatabaseLayer
         private static string MovieTabelNaam = "movie";
         private static string TagTabelNaam = "tag";
 
-        public SQLiteService()
-        {
-            Engine.NewInstance().Database = this;
-        }
+        #region Singleton
+
+        private static SQLiteService _sqLite;
+
+        public static SQLiteService CurrentInstance => _sqLite ?? (_sqLite = new SQLiteService());
+
+        #endregion
 
         #region create tables
         public static void InitSQLite()
