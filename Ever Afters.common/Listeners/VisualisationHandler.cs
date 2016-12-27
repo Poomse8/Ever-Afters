@@ -13,5 +13,7 @@ namespace Ever_Afters.common.Listeners
         void StopVideo();
         void ClearVideo();
         void DisplayError(String errormessage);
+
+        void OverlayManager(String overlayMessage, bool showOverlay = true, int xPosition = 400, int yPosition = -100);
     }
 }

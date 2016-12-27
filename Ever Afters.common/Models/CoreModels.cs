@@ -11,6 +11,8 @@ using Ever_Afters.common.Listeners;
 
 namespace Ever_Afters.common.Models
 {
+
+    #region Models
     public class PlayingVideo : Video
     {
         public bool IsBase { get; set; }
@@ -76,6 +78,10 @@ namespace Ever_Afters.common.Models
         }
     }
 
+    #endregion
+
+    #region enums
+
     public enum QueuePosition
     {
         Q1, Q2, Q3, Q4, Q5, Nextfree, Priority
@@ -86,9 +92,21 @@ namespace Ever_Afters.common.Models
         Onscreen, Offscreen
     }
 
+    public enum MathProblemType
+    {
+        QuestionExpected, AnswerExpected, TermExpected
+    }
+
+    public enum MathTerm
+    {
+        EQUALS = 0, NOTEQUALS = 1, PLUS = 2, MINUS = 3, TIMES = 4, DIVIDE = 5
+    }
+
+    #endregion
+
     #region Skeletons
 
-    public class Skel_Db : DataRequestHandler
+    public class Skel_Db : DataRequestHandler, IMathRequestHandler
     {
         public Tag SaveTag(string TagName)
         {
@@ -166,6 +184,16 @@ namespace Ever_Afters.common.Models
         {
             return false;
         }
+
+        public Tag GiveTermTag(MathTerm term)
+        {
+            return new Tag();
+        }
+
+        public Tag GiveNumberTag(int value)
+        {
+            return new Tag();
+        }
     }
 
     public class Skel_Screen : IVisualisationHandler
@@ -193,6 +221,11 @@ namespace Ever_Afters.common.Models
         public void DisplayError(string errormessage)
         {
 
+        }
+
+        public void OverlayManager(string overlayMessage, bool showOverlay = true, int xPosition = 500, int yPosition = 500)
+        {
+            
         }
     }
 

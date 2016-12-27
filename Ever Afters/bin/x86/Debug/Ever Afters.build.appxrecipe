@@ -70,6 +70,9 @@
     <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\Microsoft.Win32.Primitives\4.0.0\lib\dotnet\Microsoft.Win32.Primitives.dll">
       <PackagePath>Microsoft.Win32.Primitives.dll</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\runtime.any.System.Private.DataContractSerialization\4.1.0\lib\netcore50\System.Private.DataContractSerialization.dll">
+      <PackagePath>System.Private.DataContractSerialization.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\SQLite.Net-PCL\3.1.1\lib\Windows8\SQLite.Net.Platform.WinRT.dll">
       <PackagePath>SQLite.Net.Platform.WinRT.dll</PackagePath>
     </AppxPackagedFile>
@@ -199,9 +202,6 @@
     <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.ObjectModel\4.0.10\lib\dotnet\System.ObjectModel.dll">
       <PackagePath>System.ObjectModel.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.Private.DataContractSerialization\4.0.0\lib\netcore50\System.Private.DataContractSerialization.dll">
-      <PackagePath>System.Private.DataContractSerialization.dll</PackagePath>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.Private.Networking\4.0.0\lib\netcore50\System.Private.Networking.dll">
       <PackagePath>System.Private.Networking.dll</PackagePath>
     </AppxPackagedFile>
@@ -262,13 +262,13 @@
     <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.Runtime.Numerics\4.0.0\lib\netcore50\System.Runtime.Numerics.dll">
       <PackagePath>System.Runtime.Numerics.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.Runtime.Serialization.Json\4.0.0\lib\netcore50\System.Runtime.Serialization.Json.dll">
+    <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.Runtime.Serialization.Json\4.0.1\lib\netcore50\System.Runtime.Serialization.Json.dll">
       <PackagePath>System.Runtime.Serialization.Json.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.Runtime.Serialization.Primitives\4.0.10\lib\dotnet\System.Runtime.Serialization.Primitives.dll">
+    <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.Runtime.Serialization.Primitives\4.1.0\lib\netcore50\System.Runtime.Serialization.Primitives.dll">
       <PackagePath>System.Runtime.Serialization.Primitives.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.Runtime.Serialization.Xml\4.0.10\lib\netcore50\System.Runtime.Serialization.Xml.dll">
+    <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.Runtime.Serialization.Xml\4.1.0\lib\netcore50\System.Runtime.Serialization.Xml.dll">
       <PackagePath>System.Runtime.Serialization.Xml.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Wheatley\.nuget\packages\System.Runtime.WindowsRuntime\4.0.10\lib\netcore50\System.Runtime.WindowsRuntime.dll">

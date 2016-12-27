@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -19,6 +20,9 @@ namespace Ever_Afters
     {
         private InputChangedListener il;
         private bool toggle = false;
+
+        //Math Pack Vars
+        private bool _mathPackActive = false;
 
         //Nico's vars
         private bool _overrideKeyboard = true;
@@ -48,6 +52,10 @@ namespace Ever_Afters
             Engine.CurrentEngine.Screen = this;
             Engine.CurrentEngine.Database = SQLiteService.CurrentInstance;
             il = Engine.CurrentEngine;
+
+            //MathEngine
+            MathEngine.CurrentInstance.Screen = this;
+            MathEngine.CurrentInstance.Database = MathPackDatapool.CurrentInstance;
         }
 
         private void OnPointerReleased(object sender, PointerRoutedEventArgs e)
@@ -203,6 +211,60 @@ namespace Ever_Afters
         private void PushReadToEngine(string currentRead)
         {
             _nfcEngine.SaveInput(currentRead);
+        }
+
+        #endregion
+
+        #region MathPack
+
+        private void ToggleMathPack_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (_mathPackActive)
+            {
+                //Deactivate math pack
+                btnToggleMathPack.Background = new SolidColorBrush(Color.FromArgb(51, 00, 116, 255));
+                _mathPackActive = false;
+
+                //Stop videos
+                StopVideo();
+                ClearVideo();
+
+                //Change Engine
+                il = Engine.CurrentEngine;
+
+                //Disable any overlay
+                OverlayManager(null, false);
+            }
+            else
+            {
+                //Activate math pack
+                btnToggleMathPack.Background = new SolidColorBrush(Color.FromArgb(51, 00, 255, 139));
+                _mathPackActive = true;
+
+                //Stop videos
+                StopVideo();
+                ClearVideo();
+
+                //Change Engine
+                il = MathEngine.CurrentInstance;
+
+                //Request a new Math Equation
+                MathEngine.CurrentInstance.Ignite();
+            }
+        }
+
+        public async void OverlayManager(string overlayMessage, bool showOverlay = true, int xPosition = 400, int yPosition = -100)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                //Position the overlay
+                txtOverlay.Margin = new Thickness(xPosition, yPosition, 0, 0);
+
+                //Set the visibility
+                txtOverlay.Visibility = showOverlay ? Visibility.Visible : Visibility.Collapsed;
+
+                //Display the message
+                if (overlayMessage != null) txtOverlay.Text = overlayMessage;
+            });
         }
 
         #endregion

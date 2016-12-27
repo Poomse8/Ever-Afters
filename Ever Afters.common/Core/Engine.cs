@@ -13,7 +13,7 @@ namespace Ever_Afters.common.Core
     {
         private const int RenderEngineLeadTime = 20; //In Ms
 
-        private readonly String _path = Path.Combine(ApplicationData.Current.GetPublisherCacheFolder("EverAfters").Path, "Resources");
+        public static readonly String ResourcePath = Path.Combine(ApplicationData.Current.GetPublisherCacheFolder("EverAfters").Path, "Resources");
 
         #region SingleTon
 
@@ -49,7 +49,7 @@ namespace Ever_Afters.common.Core
             Screen = screen;
 
             //Make sure that the resources directory exists
-            if (!Directory.Exists(_path)) Directory.CreateDirectory(_path);
+            if (!Directory.Exists(ResourcePath)) Directory.CreateDirectory(ResourcePath);
         }
 
         #endregion
@@ -133,9 +133,9 @@ namespace Ever_Afters.common.Core
             Video next = Queue.GiveNextVideo();
 
             //2. Set the path relative to the current running instance
-            next.BasePath = Path.Combine(_path, next.BasePath);
-            next.OnScreenEndingPath = Path.Combine(_path, next.OnScreenEndingPath);
-            next.OffScreenEndingPath = Path.Combine(_path, next.OffScreenEndingPath);
+            next.BasePath = System.IO.Path.Combine(ResourcePath, next.BasePath);
+            next.OnScreenEndingPath = System.IO.Path.Combine(ResourcePath, next.OnScreenEndingPath);
+            next.OffScreenEndingPath = System.IO.Path.Combine(ResourcePath, next.OffScreenEndingPath);
 
             //3. Check if the video is valid - Do all the files exist?
             bool baseExists = File.Exists(next.BasePath);

@@ -64,3 +64,4 @@ C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\pri
 C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\qualifiers.txt
 C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\qualifiers.txt.intermediate
 C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters.common\obj\x86\Debug\Ever Afters.common.csprojResolveAssemblyReference.cache
