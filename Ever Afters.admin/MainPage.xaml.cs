@@ -54,6 +54,11 @@ namespace Ever_Afters.admin
             ShowGrids(3);
         }
 
+        private void ToMathGrid(object sender, PointerRoutedEventArgs e)
+        {
+            ShowGrids(4);
+        }
+
         private void ShowGrids(int gridNr)
         {
             //Set Everything Hidden
@@ -62,6 +67,7 @@ namespace Ever_Afters.admin
             upVideoGrid.Visibility = Visibility.Collapsed;
             bindTagGrid.Visibility = Visibility.Collapsed;
             removeGrid.Visibility = Visibility.Collapsed;
+            mathGrid.Visibility = Visibility.Collapsed;
 
             //Show the requested Grid
             switch (gridNr)
@@ -78,6 +84,9 @@ namespace Ever_Afters.admin
                 case 3:
                     removeGrid.Visibility = Visibility.Visible;
                     break;
+                case 4:
+                    mathGrid.Visibility = Visibility.Visible;
+                    break;
                 default:
                     beginGrid.Visibility = Visibility.Visible;
                     break;
@@ -91,7 +100,8 @@ namespace Ever_Afters.admin
             if (upVideoGrid.Visibility == Visibility.Visible) return 2;
             if (bindTagGrid.Visibility == Visibility.Visible) return 3;
             if (removeGrid.Visibility == Visibility.Visible) return 4;
-            return 5;
+            if (mathGrid.Visibility == Visibility.Visible) return 5;
+            return -1;
         }
         #endregion
 
@@ -359,6 +369,171 @@ namespace Ever_Afters.admin
                 ChangeText(bindTagTitle, "Bind Tag To Video");
                 ReEnable(bindTagSubmit);
             }, TimeSpan.FromSeconds(3));
+        }
+
+        #endregion
+
+        #region MathGrid
+
+        StorageFile mathbegin = null;
+        StorageFile mathgoodend = null;
+        StorageFile mathbadend = null;
+        StorageFile mathwait = null;
+
+        private async void MathSubmit_OnClick(object sender, RoutedEventArgs e)
+        {
+            mathSubmit.IsEnabled = false;
+            String returntext = "Unknown Error";
+
+            //Check if all the videos were uploaded
+            if (mathbegin != null && mathgoodend != null && mathbadend != null && mathwait != null)
+            {
+                try
+                {
+                    //Make sure that the resources directory exists
+                    String path = Path.Combine(ApplicationData.Current.GetPublisherCacheFolder("EverAfters").Path,
+                        "Resources");
+                    if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+                    //Check if one of the videos doesn't exist yet
+                    if(File.Exists(Path.Combine(path, "MATH_BEGIN.mp4"))) File.Delete(Path.Combine(path, "MATH_BEGIN.mp4"));
+                    if (File.Exists(Path.Combine(path, "MATH_END_BAD.mp4"))) File.Delete(Path.Combine(path, "MATH_END_BAD.mp4"));
+                    if (File.Exists(Path.Combine(path, "MATH_END_GOOD.mp4"))) File.Delete(Path.Combine(path, "MATH_END_GOOD.mp4"));
+                    if (File.Exists(Path.Combine(path, "MATH_WAIT.mp4"))) File.Delete(Path.Combine(path, "MATH_WAIT.mp4"));
+
+                    //Check if the videos are unique!
+                    if (mathbegin.Name == mathbadend.Name || mathbegin.Name == mathgoodend.Name || mathbegin.Name == mathwait.Name
+                        || mathgoodend.Name == mathbadend.Name || mathgoodend.Name == mathwait.Name || mathbadend.Name == mathwait.Name)
+                    {
+                        returntext = "Videos cannot be the same!";
+                    } else
+                    {
+                        //Copy the videos to the resource directory
+                        StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(path);
+                        StorageFile fbegin = await mathbegin.CopyAsync(folder);
+                        StorageFile fbad = await mathbadend.CopyAsync(folder);
+                        StorageFile fgood = await mathgoodend.CopyAsync(folder);
+                        StorageFile fwait = await mathwait.CopyAsync(folder);
+
+                        //Give the files a proper filename
+                        File.Move(fbegin.Path, Path.Combine(path, "MATH_BEGIN.mp4"));
+                        File.Move(fbad.Path, Path.Combine(path, "MATH_END_BAD.mp4"));
+                        File.Move(fgood.Path, Path.Combine(path, "MATH_END_GOOD.mp4"));
+                        File.Move(fwait.Path, Path.Combine(path, "MATH_WAIT.mp4"));
+
+                        //Clear the input fields
+                        mathbegin = null;
+                        mathbadend = null;
+                        mathgoodend = null;
+                        mathwait = null;
+                        MathBeginPath.Text = "No Math Begin Selected";
+                        MathBadEndPath.Text = "No Bad Ending Selected";
+                        MathGoodEndPath.Text = "No Good Ending Selected";
+                        MathWaitPath.Text = "No Waiting Movie Selected";
+
+                        //Feedback to user
+                        returntext = "Uploading Succeeded!";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.InnerException);
+                    returntext = "Whoops. Error on copying files.";
+                }
+            }
+
+            mathTitle.Text = returntext;
+
+            //Reset the display
+            ThreadPoolTimer.CreateTimer((t) =>
+            {
+                ChangeText(mathTitle, "Upload Math Videos");
+                ReEnable(mathSubmit);
+            }, TimeSpan.FromSeconds(4));
+        }
+
+        private async void OpenDialogMathBeginVideo(object sender, RoutedEventArgs e)
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker
+            {
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary
+            };
+            picker.FileTypeFilter.Add(".mp4");
+
+            StorageFile file = await picker.PickSingleFileAsync();
+            if (file != null)
+            {
+                // Application now has read/write access to the picked file
+                this.MathBeginPath.Text = file.Name;
+                mathbegin = file;
+            } else
+            {
+                this.MathBeginPath.Text = "No Math Begin Selected.";
+            }
+        }
+
+        private async void OpenDialogGoodEndVideo(object sender, RoutedEventArgs e)
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker
+            {
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary
+            };
+            picker.FileTypeFilter.Add(".mp4");
+
+            StorageFile file = await picker.PickSingleFileAsync();
+            if (file != null)
+            {
+                // Application now has read/write access to the picked file
+                this.MathGoodEndPath.Text = file.Name;
+                mathgoodend = file;
+            } else
+            {
+                this.MathGoodEndPath.Text = "No Good Ending Selected.";
+            }
+        }
+
+        private async void OpenDialogBadEndVideo(object sender, RoutedEventArgs e)
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker
+            {
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary
+            };
+            picker.FileTypeFilter.Add(".mp4");
+
+            StorageFile file = await picker.PickSingleFileAsync();
+            if (file != null)
+            {
+                // Application now has read/write access to the picked file
+                this.MathBadEndPath.Text = file.Name;
+                mathbadend = file;
+            } else
+            {
+                this.MathBadEndPath.Text = "No Bad Ending Selected.";
+            }
+        }
+
+        private async void OpenDialogMidVideo(object sender, RoutedEventArgs e)
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker
+            {
+                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary
+            };
+            picker.FileTypeFilter.Add(".mp4");
+
+            StorageFile file = await picker.PickSingleFileAsync();
+            if (file != null)
+            {
+                // Application now has read/write access to the picked file
+                this.MathWaitPath.Text = file.Name;
+                mathwait = file;
+            } else
+            {
+                this.MathWaitPath.Text = "No Waiting Movie Selected.";
+            }
         }
 
         #endregion

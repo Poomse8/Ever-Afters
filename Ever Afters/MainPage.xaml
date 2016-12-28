@@ -14,12 +14,13 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <Grid ColumnSpan="5">
+        <Grid ColumnSpan="6">
             <TextBlock HorizontalAlignment="Center" x:Name="txtError" FontSize="30" VerticalAlignment="Top" Foreground="Red"/>
             <MediaElement x:Name="mediaPlayer"
                     Source=""
@@ -29,6 +30,7 @@
                     AreTransportControlsEnabled="False" CurrentStateChanged="state" />
             <TextBlock HorizontalAlignment="Center" Text="Click to start/pause the video (DUMMY - replacement of DAL)" VerticalAlignment="Bottom" Foreground="White"/>
         </Grid>
+        <TextBlock x:Name="txtOverlay" Foreground="Red" Grid.ColumnSpan="6" FontSize="40" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
         <!--Buttons en tools voor nfc-->
         <Button x:Name="btnReader0" Tag="0" Content="Kubus 1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" FontSize="40" Background="#3300FF8B" BorderThickness="5" Click="btnReader_Click" />
         <Button x:Name="btnReader1" Tag="1" Content="Kubus 2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1" FontSize="40" Background="#330074FF" BorderThickness="5" Click="btnReader_Click" />
@@ -36,5 +38,6 @@
         <Button x:Name="btnReader3" Tag="3"  Content="Kubus 4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="3" FontSize="40" Background="#330074FF" BorderThickness="5" Click="btnReader_Click" />
         <Button x:Name="btnReader4" Tag="4"  Content="Kubus 5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="4" FontSize="40" Background="#330074FF" BorderThickness="5" Click="btnReader_Click" />
         <TextBox x:Name="txtNfcInput" Margin="5" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="25" Opacity="0"/>
+        <Button x:Name="btnToggleMathPack" Content="Math Pack" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="5" FontSize="36" Background="#330074FF" BorderThickness="5" Click="ToggleMathPack_OnClick"></Button>
     </Grid>
 </Page>

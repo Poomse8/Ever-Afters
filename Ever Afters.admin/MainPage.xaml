@@ -18,11 +18,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="upTag" Grid.Column="0" Text="Upload Tag" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" PointerPressed="ToTagGrid" />
             <TextBlock x:Name="upVideo" Grid.Column="1" Text="Upload Video" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" PointerPressed="ToVideoGrid" />
             <TextBlock x:Name="bindTag" Grid.Column="2" Text="Assign Tags" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" PointerPressed="ToBindGrid" />
             <TextBlock x:Name="remove" Grid.Column="3" Text="Delete Tags/Videos" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" PointerPressed="ToRemoveGrid" />
+            <TextBlock x:Name="math" Grid.Column="4" Text="Import Math Videos" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" PointerPressed="ToMathGrid" />
         </Grid>
         <Grid Grid.Row="1" x:Name="beginGrid" Visibility="Visible">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -84,6 +86,31 @@
                     <ComboBox HorizontalAlignment="Center" Margin="50,0,0,0" x:Name="cboAllVideo" />
                     <Button x:Name="removeVideoSubmit" Margin="50,0,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="RemoveVideoSubmit_OnClick"/>
                 </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" x:Name="mathGrid" Visibility="Collapsed">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="mathTitle" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Upload Math Videos" FontSize="50" Foreground="White"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button x:Name="SelectMathBegin" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Select Math Begin" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="OpenDialogMathBeginVideo"/>
+                        <TextBlock x:Name="MathBeginPath" Text="No Math Begin Selected" Foreground="White" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0">
+                        <Button x:Name="SelectMathGoodEnd" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Select Good Ending" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="OpenDialogGoodEndVideo"/>
+                        <TextBlock x:Name="MathGoodEndPath" Text="No Good Ending Selected" Foreground="White" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="50,0,0,0">
+                        <Button x:Name="SelectMathBadEnd" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Select Bad Ending" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="OpenDialogBadEndVideo"/>
+                        <TextBlock x:Name="MathBadEndPath" Text="No Bad Ending Selected" Foreground="White" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="50,0,0,0">
+                        <Button x:Name="SelectMathWait" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Select Waiting Movie" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="OpenDialogMidVideo"/>
+                        <TextBlock x:Name="MathWaitPath" Text="No Waiting Movie Selected" Foreground="White" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+                <Button x:Name="mathSubmit" Margin="0,50,0,0" HorizontalAlignment="Center" Height="30" Width="200" Content="Submit" Foreground="White" BorderThickness="1" BorderBrush="White" RequestedTheme="Light" Click="MathSubmit_OnClick"/>
+
             </StackPanel>
         </Grid>
     </Grid>

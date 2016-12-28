@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -19,6 +20,9 @@ namespace Ever_Afters
     {
         private InputChangedListener il;
         private bool toggle = false;
+
+        //Math Pack Vars
+        private bool _mathPackActive = false;
 
         //Nico's vars
         private bool _overrideKeyboard = true;
@@ -48,6 +52,10 @@ namespace Ever_Afters
             Engine.CurrentEngine.Screen = this;
             Engine.CurrentEngine.Database = SQLiteService.CurrentInstance;
             il = Engine.CurrentEngine;
+
+            //MathEngine
+            MathEngine.CurrentInstance.Screen = this;
+            MathEngine.CurrentInstance.Database = MathPackDatapool.CurrentInstance;
         }
 
         private void OnPointerReleased(object sender, PointerRoutedEventArgs e)
@@ -73,28 +81,34 @@ namespace Ever_Afters
             return total - progress;
         }
 
-        public void PlayVideo(Uri uri)
+        public async void PlayVideo(Uri uri)
         {
-            //Start the video
-            mediaPlayer.Stop();
-            mediaPlayer.Source = uri;
-            mediaPlayer.Play();
-            mediaPlayer.AutoPlay = true;
+            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                //Start the video
+                mediaPlayer.Stop();
+                mediaPlayer.Source = uri;
+                mediaPlayer.Play();
+                mediaPlayer.AutoPlay = true;
 
-            //Log to console
-            Debug.WriteLine(uri.Segments.Last());
+                //Log to console
+                Debug.WriteLine(uri.Segments.Last());
+            });
         }
 
-        public void StopVideo()
+        public async void StopVideo()
         {
-            mediaPlayer.Pause();
+            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                mediaPlayer.Pause();
+            });
         }
 
-        public void ClearVideo()
+        public async void ClearVideo()
         {
-            mediaPlayer.Stop();
-            mediaPlayer.Source = null;
-            mediaPlayer.AutoPlay = false;
+            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                mediaPlayer.Stop();
+                mediaPlayer.Source = null;
+                mediaPlayer.AutoPlay = false;
+            });
         }
 
         public void DisplayError(string errormessage)
@@ -203,6 +217,58 @@ namespace Ever_Afters
         private void PushReadToEngine(string currentRead)
         {
             _nfcEngine.SaveInput(currentRead);
+        }
+
+        #endregion
+
+        #region MathPack
+
+        private void ToggleMathPack_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (_mathPackActive)
+            {
+                //Deactivate math pack
+                btnToggleMathPack.Background = new SolidColorBrush(Color.FromArgb(51, 00, 116, 255));
+                _mathPackActive = false;
+
+                //Shutdown Math Engine
+                MathEngine.CurrentInstance.ShutdownMathEngine();
+
+                //Change Engine
+                il = Engine.CurrentEngine;
+                _nfcEngine.il = Engine.CurrentEngine;
+
+                //Disable any overlay
+                OverlayManager(null, false);
+            }
+            else
+            {
+                //Activate math pack
+                btnToggleMathPack.Background = new SolidColorBrush(Color.FromArgb(51, 00, 255, 139));
+                _mathPackActive = true;
+
+                //Change Engine
+                Engine.CurrentEngine.OnQueueClearRequest(true);
+                il = MathEngine.CurrentInstance;
+                _nfcEngine.il = MathEngine.CurrentInstance;
+
+                //Request a new Math Equation
+                MathEngine.CurrentInstance.StartupMathEngine();
+            }
+        }
+
+        public async void OverlayManager(string overlayMessage, bool showOverlay = true, int xPosition = 400, int yPosition = -100)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                //Position the overlay
+                txtOverlay.Margin = new Thickness(xPosition, yPosition, 0, 0);
+
+                //Set the visibility
+                txtOverlay.Visibility = showOverlay ? Visibility.Visible : Visibility.Collapsed;
+
+                //Display the message
+                if (overlayMessage != null) txtOverlay.Text = overlayMessage;
+            });
         }
 
         #endregion

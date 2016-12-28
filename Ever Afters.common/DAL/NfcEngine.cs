@@ -45,7 +45,7 @@ namespace Ever_Afters.common.DAL
 
         public void SaveInput(string input)
         {
-            Debug.WriteLine(CurrentReads.Count + "+" + CurrentReads.Capacity);
+            //Debug.WriteLine(CurrentReads.Count + "+" + CurrentReads.Capacity);
             if (CurrentReads[(int)ReaderId] == input)
             {
                 CurrentReads[(int)ReaderId] = string.Empty;
