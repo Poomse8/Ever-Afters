@@ -21,7 +21,7 @@ namespace Ever_Afters
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            //SQLiteService.InitSQLite();
+            SQLiteService.InitSQLite();
         }
 
         /// <summary>

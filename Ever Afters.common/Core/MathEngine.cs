@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -102,13 +103,70 @@ namespace Ever_Afters.common.Core
                     result = problem.input1 * problem.input2;
                     break;
                 case MathTerm.DIVIDE:
-                    double r = problem.input1 / problem.input2;
+                    double r = (double)problem.input1 / (double)problem.input2;
                     double r_to_int = Convert.ToDouble(Convert.ToInt32(r));
                     if (r - r_to_int == 0) result = Convert.ToInt32(r_to_int);
                     break;
             }
 
             return result;
+        }
+
+        private List<MathTerm> FindCorrectTerms(MathProblem problem)
+        {
+            List<MathTerm> answers = new List<MathTerm>();
+
+            int? correctSolution = CalculateAnswerProblem(problem);
+            if (!correctSolution.HasValue) return answers;
+            foreach (MathTerm term in Enum.GetValues(typeof(MathTerm)))
+            {
+                MathProblem newProblem = problem;
+                newProblem.Term = term;
+                int? newsolution = CalculateAnswerProblem(newProblem);
+
+                if(newsolution.HasValue && newsolution.Value == correctSolution.Value)
+                    answers.Add(term);
+            }
+
+            return answers;
+        }
+
+        private List<int> FindCorrectAnswersInput1(MathProblem problem)
+        {
+            List<int> answers = new List<int>();
+
+            int? correctSolution = CalculateAnswerProblem(problem);
+            if (!correctSolution.HasValue) return answers;
+            for (int i = 0; i <= 10; i++)
+            {
+                MathProblem newProblem = problem;
+                newProblem.input1 = i;
+                int? newSolution = CalculateAnswerProblem(newProblem);
+
+                if(newSolution.HasValue && newSolution.Value == correctSolution.Value)
+                    answers.Add(i);
+            }
+
+            return answers;
+        }
+
+        private List<int> FindCorrectAnswersInput2(MathProblem problem)
+        {
+            List<int> answers = new List<int>();
+
+            int? correctSolution = CalculateAnswerProblem(problem);
+            if (!correctSolution.HasValue) return answers;
+            for (int i = 0; i <= 10; i++)
+            {
+                MathProblem newProblem = problem;
+                newProblem.input2 = i;
+                int? newSolution = CalculateAnswerProblem(newProblem);
+
+                if (newSolution.HasValue && newSolution.Value == correctSolution.Value)
+                    answers.Add(i);
+            }
+
+            return answers;
         }
 
         #endregion
@@ -165,23 +223,26 @@ namespace Ever_Afters.common.Core
                 problem.Type = MathProblemType.TermExpected;
 
                 //b. Determine the term that needs to be eliminated
-                MathTerm answer;
+                List<MathTerm> answer = new List<MathTerm>();
                 double elim_rand = Generator.NextDouble();
                 if (elim_rand > 0.7)
                 {
                     //Eliminate the = sign.
-                    answer = MathTerm.EQUALS;
+                    answer.Add(MathTerm.EQUALS);
                     problem.Question = problem.input1 + MathProblem.TermString(problem.Term) + problem.input2 + " ? " +
                                        problem.output;
                 } else
                 {
                     //Eliminate the + - * / signs
-                    answer = problem.Term;
                     problem.Question = problem.input1 + " ? " + problem.input2 + " = " + problem.output;
+                    answer = FindCorrectTerms(problem);
                 }
 
                 //c. Lookup the answer cube
-                problem.ExpectedAnswer = Database.GiveTermTag(answer);
+                foreach (MathTerm t in answer)
+                    foreach (Tag tag in Database.GiveTermTag(t))
+                        problem.ExpectedAnswer.Add(tag);
+                
 
             } else if (mpt_rand > 0.45)
             {
@@ -200,24 +261,26 @@ namespace Ever_Afters.common.Core
                 problem.Type = MathProblemType.QuestionExpected;
 
                 //b. Determine the input that needs to be eliminated
-                int answer;
+                List<int> answer;
                 double elim_rand = Generator.NextDouble();
                 if (elim_rand > 0.5)
                 {
                     //Eliminate the first input.
-                    answer = problem.input1;
                     problem.Question = " ? " + MathProblem.TermString(problem.Term) + problem.input2 + " = " +
                                        problem.output;
+                    answer = FindCorrectAnswersInput1(problem);
                 } else
                 {
                     //Eliminate the second input.
-                    answer = problem.input2;
                     problem.Question = problem.input1 + MathProblem.TermString(problem.Term) + " ? = " +
                                        problem.output;
+                    answer = FindCorrectAnswersInput2(problem);
                 }
 
                 //c. Lookup the answer cube
-                problem.ExpectedAnswer = Database.GiveNumberTag(answer);
+                foreach(int i in answer)
+                    foreach(Tag tag in Database.GiveNumberTag(i))
+                        problem.ExpectedAnswer.Add(tag);
             }
 
             //4. Check if the rendered question is possible to recreate with given blocks. (aka, is a tag found for asked answer.
@@ -245,13 +308,25 @@ namespace Ever_Afters.common.Core
             if(toPlay == null) return TimeSpan.Zero;
 
             //2. Issue Video with priority
-            Engine.CurrentEngine.OnQueueClearRequest(false);
-            Queue.AddToQueue(toPlay, QueuePosition.Priority);
-            Queue.AddToQueue(Database.GiveVideo(MathVideos.MID));
-            Engine.CurrentEngine.VideoStarted();
+            ClearAndPlay(toPlay);
 
             //3. Dummy return
             return TimeSpan.Zero;
+        }
+
+        private void ClearAndPlay(Video toPlay)
+        {
+            //1. Clear the current queue
+            Engine.CurrentEngine.OnQueueClearRequest(true);
+
+            //2. Issue the requested video to play first
+            Queue.AddToQueue(toPlay, QueuePosition.Priority);
+
+            //3. Issue the wait video
+            Queue.AddToQueue(Database.GiveVideo(MathVideos.MID));
+
+            //4. Kick the engine
+            Engine.CurrentEngine.VideoStarted();
         }
 
         #endregion
@@ -284,7 +359,7 @@ namespace Ever_Afters.common.Core
                 }
                 else
                 {
-                   //3b. Issue the 'oh no' video 
+                    //3b. Issue the 'oh no' video 
                     TriggerVideo(MathVideos.END_BAD);
                 }
             }

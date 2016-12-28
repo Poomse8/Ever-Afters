@@ -73,10 +73,20 @@ namespace Ever_Afters.common.Core
                     if (duration < 0) duration = 0;
                     TimeSpan waitTime = TimeSpan.FromSeconds(duration);
 
-                    //4. Set thread to sleep until video is expected
-                    //new Task(Update).Wait(waitTime);
-                    await Task.Delay(waitTime);
-                    Update();
+                    if (waitTime.TotalMilliseconds >= 250)
+                    {
+                        //If longer than 250 ms, wait 250 ms and then rerun the engine. This to be able to not freeze the engine lock.
+                        await Task.Delay(TimeSpan.FromMilliseconds(250));
+                        Ignited = false;
+                        Ignite();
+                    }
+                    else
+                    {
+                        //4. Set thread to sleep until video is expected
+                        //new Task(Update).Wait(waitTime);
+                        await Task.Delay(waitTime);
+                        Update();
+                    }
                 }
             }
         }

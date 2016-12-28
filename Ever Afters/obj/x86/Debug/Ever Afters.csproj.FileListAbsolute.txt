@@ -65,7 +65,6 @@ C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Numerics.Vectors.WindowsRuntime.dll
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.ObjectModel.dll
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Private.DataContractSerialization.dll
-C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Private.Networking.dll
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Private.ServiceModel.dll
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Private.Uri.dll
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Reflection.dll
@@ -126,7 +125,6 @@ C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\Ever Af
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\ResourceHandlingTask.state
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.Microsoft.CSharp.SR.resw
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.Microsoft.VisualBasic.SR.resw
-C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.AppContext.SR.resw
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Collections.SR.resw
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Collections.Concurrent.SR.resw
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Collections.Immutable.SR.resw
@@ -154,10 +152,8 @@ C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResou
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Numerics.Vectors.SR.resw
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.ObjectModel.SR.resw
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Private.DataContractSerialization.SR.resw
-C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Private.Networking.SR.resw
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Private.ServiceModel.SR.resw
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Private.Uri.SR.resw
-C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Reflection.Context.SR.resw
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Reflection.DispatchProxy.SR.resw
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Reflection.Metadata.SR.resw
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Runtime.Extensions.SR.resw
@@ -790,3 +786,27 @@ C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\ProjectArc
 C:\Users\esteb\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\Ever Afters.build.appxrecipe
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\SQLite.Net.Platform.WinRT.dll
 C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\SQLite.Net.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\clrjit.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Buffers.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Net.NameResolution.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Net.WebSockets.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Net.WebSockets.Client.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Security.Cryptography.Algorithms.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Security.Cryptography.Cng.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Security.Cryptography.Encoding.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Security.Cryptography.Primitives.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Security.Cryptography.X509Certificates.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\bin\x86\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Net.Primitives.SR.resw
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Net.Sockets.SR.resw
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Buffers.SR.resw
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Net.NameResolution.SR.resw
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Net.NetworkInformation.SR.resw
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Net.WebSockets.SR.resw
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Net.WebSockets.Client.SR.resw
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Security.Cryptography.Algorithms.SR.resw
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Security.Cryptography.Cng.SR.resw
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Security.Cryptography.Encoding.SR.resw
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Security.Cryptography.Primitives.SR.resw
+C:\Users\Wheatley\Documents\GitHub\Ever-Afters\Ever Afters\obj\x86\Debug\FxResources.System.Security.Cryptography.X509Certificates.SR.resw

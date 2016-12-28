@@ -81,28 +81,34 @@ namespace Ever_Afters
             return total - progress;
         }
 
-        public void PlayVideo(Uri uri)
+        public async void PlayVideo(Uri uri)
         {
-            //Start the video
-            mediaPlayer.Stop();
-            mediaPlayer.Source = uri;
-            mediaPlayer.Play();
-            mediaPlayer.AutoPlay = true;
+            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                //Start the video
+                mediaPlayer.Stop();
+                mediaPlayer.Source = uri;
+                mediaPlayer.Play();
+                mediaPlayer.AutoPlay = true;
 
-            //Log to console
-            Debug.WriteLine(uri.Segments.Last());
+                //Log to console
+                Debug.WriteLine(uri.Segments.Last());
+            });
         }
 
-        public void StopVideo()
+        public async void StopVideo()
         {
-            mediaPlayer.Pause();
+            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                mediaPlayer.Pause();
+            });
         }
 
-        public void ClearVideo()
+        public async void ClearVideo()
         {
-            mediaPlayer.Stop();
-            mediaPlayer.Source = null;
-            mediaPlayer.AutoPlay = false;
+            await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => {
+                mediaPlayer.Stop();
+                mediaPlayer.Source = null;
+                mediaPlayer.AutoPlay = false;
+            });
         }
 
         public void DisplayError(string errormessage)
