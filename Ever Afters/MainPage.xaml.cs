@@ -225,12 +225,12 @@ namespace Ever_Afters
                 btnToggleMathPack.Background = new SolidColorBrush(Color.FromArgb(51, 00, 116, 255));
                 _mathPackActive = false;
 
-                //Stop videos
-                StopVideo();
-                ClearVideo();
+                //Shutdown Math Engine
+                MathEngine.CurrentInstance.ShutdownMathEngine();
 
                 //Change Engine
                 il = Engine.CurrentEngine;
+                _nfcEngine.il = Engine.CurrentEngine;
 
                 //Disable any overlay
                 OverlayManager(null, false);
@@ -241,15 +241,13 @@ namespace Ever_Afters
                 btnToggleMathPack.Background = new SolidColorBrush(Color.FromArgb(51, 00, 255, 139));
                 _mathPackActive = true;
 
-                //Stop videos
-                StopVideo();
-                ClearVideo();
-
                 //Change Engine
+                Engine.CurrentEngine.OnQueueClearRequest(true);
                 il = MathEngine.CurrentInstance;
+                _nfcEngine.il = MathEngine.CurrentInstance;
 
                 //Request a new Math Equation
-                MathEngine.CurrentInstance.Ignite();
+                MathEngine.CurrentInstance.StartupMathEngine();
             }
         }
 

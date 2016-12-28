@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Ever_Afters.common.Enums;
 using Ever_Afters.common.Listeners;
@@ -15,7 +14,9 @@ namespace Ever_Afters.common.Core
         #region SingleTon
 
         #region Fields & Properties
+        private bool vplong = false;
 
+        private const int RenderEngineLeadTime = 40; //In Ms
         public IVisualisationHandler Screen { get; set; }
         public IMathRequestHandler Database { get; set; }
 
@@ -101,9 +102,9 @@ namespace Ever_Afters.common.Core
                     result = problem.input1 * problem.input2;
                     break;
                 case MathTerm.DIVIDE:
-                    decimal r = problem.input1 / problem.input2;
-                    int r_to_int = Convert.ToInt32(r);
-                    if (r - r_to_int == 0) result = r_to_int;
+                    double r = problem.input1 / problem.input2;
+                    double r_to_int = Convert.ToDouble(Convert.ToInt32(r));
+                    if (r - r_to_int == 0) result = Convert.ToInt32(r_to_int);
                     break;
             }
 
@@ -114,13 +115,39 @@ namespace Ever_Afters.common.Core
 
         #region Logic
 
-        public void Ignite()
+        public void StartupMathEngine()
         {
+            //1. Activate the vplong.
+            vplong = true;
+
+            //2. Start the beginvideo
+            TimeSpan waitTime = TriggerVideo(MathVideos.BEGIN);
+
+            //3. Kickstart the engine
             var asynctask = new Task(async () =>
             {
-                await ShowMathProblem();
+                await Ignite(waitTime.TotalSeconds);
             });
             asynctask.Start();
+        }
+
+        public void ShutdownMathEngine()
+        {
+            //1. Delete the background video
+            Engine.CurrentEngine.OnQueueClearRequest(true);
+
+            //2. De-activate the vplong.
+            vplong = false;
+        }
+
+        private async Task Ignite(double wait = 0)
+        {
+            //1. Wait for the video to complete
+            TimeSpan waitTime = TimeSpan.FromSeconds(wait);
+
+            //2. Give Mathproblem
+            await Task.Delay(waitTime);
+            await ShowMathProblem();
         }
 
         private async Task ShowMathProblem()
@@ -199,10 +226,32 @@ namespace Ever_Afters.common.Core
                 //5. Listen for the Expected answer
                 CurrentProblem = problem;
 
-                //6. Send the answer to the screen
-                Screen.OverlayManager(problem.Question);
+                //6. Send the answer to the screen if allowed
+                if(vplong) Screen.OverlayManager(problem.Question);
             }
             else await ShowMathProblem(); //Keep retrying.
+        }
+
+        #endregion
+
+        #region Movie
+
+        private TimeSpan TriggerVideo(MathVideos vid)
+        {
+            if (!vplong) return TimeSpan.Zero;
+
+            //1. Get the physical Video
+            Video toPlay = Database.GiveVideo(vid);
+            if(toPlay == null) return TimeSpan.Zero;
+
+            //2. Issue Video with priority
+            Engine.CurrentEngine.OnQueueClearRequest(false);
+            Queue.AddToQueue(toPlay, QueuePosition.Priority);
+            Queue.AddToQueue(Database.GiveVideo(MathVideos.MID));
+            Engine.CurrentEngine.VideoStarted();
+
+            //3. Dummy return
+            return TimeSpan.Zero;
         }
 
         #endregion
@@ -213,17 +262,48 @@ namespace Ever_Afters.common.Core
 
         public void OnTagAdded(Sensors sensor, string TagIdentifier)
         {
-            throw new NotImplementedException();
+            //Log to console
+            Debug.WriteLine("Tag added: " + TagIdentifier);
+
+            //1. Check if an answer is expected
+            if (CurrentProblem != null)
+            {
+                //2. Check if given answer is expected
+                if ((from a in CurrentProblem.ExpectedAnswer where a.name.Equals(TagIdentifier) select a.name).Any())
+                {
+                    //3a. Issue the 'well done' video
+                    TimeSpan waitTime = TriggerVideo(MathVideos.END_GOOD);
+
+                    //4. Issue the next math question
+                    CurrentProblem = null;
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(waitTime);
+                        if(CurrentProblem == null) StartupMathEngine(); //If no other question has been asked, ask again.
+                    });
+                }
+                else
+                {
+                   //3b. Issue the 'oh no' video 
+                    TriggerVideo(MathVideos.END_BAD);
+                }
+            }
+            else
+            {
+                StartupMathEngine(); //Ask another question
+            }
         }
 
         public void OnTagRemoved(Sensors sensor)
         {
-            throw new NotImplementedException();
+            
         }
 
         public bool OnQueueClearRequest(bool force)
         {
-            throw new NotImplementedException();
+            if (!force) return false;
+            CurrentProblem = null;
+            return true;
         }
 
         #endregion

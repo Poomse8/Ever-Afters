@@ -102,6 +102,11 @@ namespace Ever_Afters.common.Models
         EQUALS = 0, NOTEQUALS = 1, PLUS = 2, MINUS = 3, TIMES = 4, DIVIDE = 5
     }
 
+    public enum MathVideos
+    {
+        BEGIN, MID, END_GOOD, END_BAD
+    }
+
     #endregion
 
     #region Skeletons
@@ -185,14 +190,19 @@ namespace Ever_Afters.common.Models
             return false;
         }
 
-        public Tag GiveTermTag(MathTerm term)
+        public List<Tag> GiveTermTag(MathTerm term)
         {
-            return new Tag();
+            return new List<Tag>();
         }
 
-        public Tag GiveNumberTag(int value)
+        public List<Tag> GiveNumberTag(int value)
         {
-            return new Tag();
+            return new List<Tag>();
+        }
+
+        public Video GiveVideo(MathVideos video)
+        {
+            return LoadVideoFromTag(null);
         }
     }
 

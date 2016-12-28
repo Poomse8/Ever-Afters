@@ -23,6 +23,7 @@ namespace Ever_Afters.common.Core
         public DataRequestHandler Database { get; set; }
 
         public bool Ignited { get; private set; }
+        private bool extra_pack_exception = false;
 
         private Random _random;
 
@@ -69,6 +70,7 @@ namespace Ever_Afters.common.Core
                     //3. Check with Screen -> How long until the next video is expected?
                     Double duration = Screen.GetRemainingDuration();
                     if (duration - RenderEngineLeadTime > 0) duration -= RenderEngineLeadTime;
+                    if (duration < 0) duration = 0;
                     TimeSpan waitTime = TimeSpan.FromSeconds(duration);
 
                     //4. Set thread to sleep until video is expected
@@ -96,20 +98,17 @@ namespace Ever_Afters.common.Core
                         if (RandomBool)
                         {
                             PushNextOnScreenEnding();
-                        }
-                        else
+                        } else
                         {
                             PushNextOffScreenEnding();
                         }
-                    }
-                    else
+                    } else
                     {
                         //4. Push the appropriate ending.
                         if (Queue.NextVideo.BaseStartsOnScreen)
                         {
                             PushNextOnScreenEnding();
-                        }
-                        else
+                        } else
                         {
                             PushNextOffScreenEnding();
                         }
@@ -119,6 +118,14 @@ namespace Ever_Afters.common.Core
 
             //Restart the loop
             Ignited = false;
+
+            //For extra packs - only the base path is provided. If the on- or offscreen path isn't known, reboot the engine without errors.
+            if (extra_pack_exception)
+            {
+                CurrentlyPlaying.IsBase = false;
+                extra_pack_exception = false;
+                Ignite();
+            }
         }
 
         private void PushNextVideo()
@@ -133,40 +140,40 @@ namespace Ever_Afters.common.Core
             Video next = Queue.GiveNextVideo();
 
             //2. Set the path relative to the current running instance
-            next.BasePath = System.IO.Path.Combine(ResourcePath, next.BasePath);
-            next.OnScreenEndingPath = System.IO.Path.Combine(ResourcePath, next.OnScreenEndingPath);
-            next.OffScreenEndingPath = System.IO.Path.Combine(ResourcePath, next.OffScreenEndingPath);
+            if(next.BasePath != null) next.BasePath = Path.Combine(ResourcePath, next.BasePath);
+            if(next.OnScreenEndingPath != null) next.OnScreenEndingPath = Path.Combine(ResourcePath, next.OnScreenEndingPath);
+            if(next.OffScreenEndingPath != null) next.OffScreenEndingPath = Path.Combine(ResourcePath, next.OffScreenEndingPath);
 
-            //3. Check if the video is valid - Do all the files exist?
-            bool baseExists = File.Exists(next.BasePath);
-            bool onExists = File.Exists(next.OnScreenEndingPath);
-            bool offExists = File.Exists(next.OffScreenEndingPath);
-
-            if (baseExists && onExists && offExists)
+            //3. Check if the video is valid
+            if (File.Exists(next.BasePath))
             {
                 //4. Replace the field and order the screen to play
                 CurrentlyPlaying = PlayingVideo.MakeFromVideo(next);
                 CurrentlyPlaying.SetBase();
                 Screen.PlayVideo(new Uri(next.BasePath));
             }
-            else
-            {
-                Debug.WriteLine("The requested video files don't exist!");
-            }
         }
 
         private void PushNextOnScreenEnding()
         {
-            Uri onscreen = new Uri(CurrentlyPlaying.OnScreenEndingPath);
-            CurrentlyPlaying.SetEnding(Ending.Onscreen);
-            Screen.PlayVideo(onscreen);
+            //Check if the video is valid
+            if (File.Exists(CurrentlyPlaying.OnScreenEndingPath))
+            {
+                Uri onscreen = new Uri(CurrentlyPlaying.OnScreenEndingPath);
+                CurrentlyPlaying.SetEnding(Ending.Onscreen);
+                Screen.PlayVideo(onscreen);
+            } else if (CurrentlyPlaying.OnScreenEndingPath == null) extra_pack_exception = true;
         }
 
         private void PushNextOffScreenEnding()
         {
-            Uri offscreen = new Uri(CurrentlyPlaying.OffScreenEndingPath);
-            CurrentlyPlaying.SetEnding(Ending.Offscreen);
-            Screen.PlayVideo(offscreen);
+            //Check if the video is valid
+            if (File.Exists(CurrentlyPlaying.OffScreenEndingPath))
+            {
+                Uri offscreen = new Uri(CurrentlyPlaying.OffScreenEndingPath);
+                CurrentlyPlaying.SetEnding(Ending.Offscreen);
+                Screen.PlayVideo(offscreen);
+            } else if (CurrentlyPlaying.OffScreenEndingPath == null) extra_pack_exception = true;
         }
 
         #endregion
@@ -180,11 +187,9 @@ namespace Ever_Afters.common.Core
                 Tag loadedTag = Database.LoadTagByName(TagIdentifier);
                 return Database.LoadVideoFromTag(loadedTag);
 
-            } else
-            {
-                Screen.DisplayError("The tag you scanned was not found in the database. We're sorry.");
-                return null;
             }
+            Screen.DisplayError("The tag you scanned was not found in the database. We're sorry.");
+            return null;
         }
 
         public void VideoStarted()
@@ -201,12 +206,15 @@ namespace Ever_Afters.common.Core
             //1. Clear the queue
             bool success = Queue.ClearQueue();
 
-            //2. Delete the currentlyplayingobject
-            CurrentlyPlaying = null;
+            if (force)
+            {
+                //2. Delete the currentlyplayingobject
+                CurrentlyPlaying = null;
 
-            //3. Interrupt the visual
-            Screen.StopVideo();
-            Screen.ClearVideo();
+                //3. Interrupt the visual
+                Screen.StopVideo();
+                Screen.ClearVideo();
+            }
 
             return success;
         }

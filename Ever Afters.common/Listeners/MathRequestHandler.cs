@@ -9,7 +9,8 @@ namespace Ever_Afters.common.Listeners
 {
     public interface IMathRequestHandler
     {
-        Tag GiveTermTag(MathTerm term);
-        Tag GiveNumberTag(int value);
+        List<Tag> GiveTermTag(MathTerm term);
+        List<Tag> GiveNumberTag(int value);
+        Video GiveVideo(MathVideos video);
     }
 }

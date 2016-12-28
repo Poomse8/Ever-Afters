@@ -20,7 +20,6 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="txtOverlay" Grid.ColumnSpan="6" FontSize="40" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
         <Grid ColumnSpan="6">
             <TextBlock HorizontalAlignment="Center" x:Name="txtError" FontSize="30" VerticalAlignment="Top" Foreground="Red"/>
             <MediaElement x:Name="mediaPlayer"
@@ -31,6 +30,7 @@
                     AreTransportControlsEnabled="False" CurrentStateChanged="state" />
             <TextBlock HorizontalAlignment="Center" Text="Click to start/pause the video (DUMMY - replacement of DAL)" VerticalAlignment="Bottom" Foreground="White"/>
         </Grid>
+        <TextBlock x:Name="txtOverlay" Foreground="Red" Grid.ColumnSpan="6" FontSize="40" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
         <!--Buttons en tools voor nfc-->
         <Button x:Name="btnReader0" Tag="0" Content="Kubus 1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" FontSize="40" Background="#3300FF8B" BorderThickness="5" Click="btnReader_Click" />
         <Button x:Name="btnReader1" Tag="1" Content="Kubus 2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1" FontSize="40" Background="#330074FF" BorderThickness="5" Click="btnReader_Click" />

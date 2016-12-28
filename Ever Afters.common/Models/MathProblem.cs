@@ -10,7 +10,7 @@ namespace Ever_Afters.common.Models
     {
         //Properties
         public MathProblemType Type { get; set; }
-        public Tag ExpectedAnswer { get; set; }
+        public List<Tag> ExpectedAnswer { get; set; }
         public String Question { get; set; }
 
         public int input1 { get; set; }
@@ -24,13 +24,13 @@ namespace Ever_Afters.common.Models
             switch (term)
             {
                     case MathTerm.DIVIDE:
-                    return " / ";
+                    return " % ";
                     case MathTerm.EQUALS:
                     return " = ";
                     case MathTerm.MINUS:
                     return " - ";
                     case MathTerm.NOTEQUALS:
-                    return " /= ";
+                    return " ≠ ";
                     case MathTerm.PLUS:
                     return " + ";
                     case MathTerm.TIMES:
